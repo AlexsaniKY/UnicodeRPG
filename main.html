@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Title</title>
+	<meta charset=utf-8>
+	<style rel="stylesheet" type="text/css">
+		td{
+			text-align: center; 
+			width:1.5ch; 
+			height:.5em;
+			}
+			
+		table{
+			table-layout:fixed; 
+			border-spacing:0;
+			border-collapse: collapse;
+			}
+	</style>
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+	<h1>This is a Heading</h1>
+	<p>This is a paragraph.</p>
+	<div style="position:relative;width:1.5ch; height:1em;">
+		<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+		<p style="position:absolute; top:0em; color:brown;">i</p>
+	</div>
+	<div style="position:static;width:1.5ch; height:1em;">
+		<div style="position:relative;">
+			<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+			<p style="position:absolute; top:0em; color:brown;">i</p>
+		</div>
+	</div>
+	<div style="position:static;width:1.5ch; height:1em;">
+		<div style="position:relative;">
+			<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+			<p style="position:absolute; top:0em; color:brown;">i</p>
+		</div>
+	</div>
+	<div style="position:static;width:1.5ch; height:1em;">
+		<div style="position:relative;">
+			<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+			<p style="position:absolute; top:0em; left:0ch; color:brown;">i</p>
+		</div>
+	</div>
+	<br>
+	<br>
+	
+	
+	
+	<!-- <table align="left"> <tbody>
+	<tr>
+		<td>
+			<div style="position:static;width:1.5ch; height:1em;" title="tree">
+				<div style="position:relative;left:0;top:0;">
+					<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:0em; color:brown;">i</p>
+				</div>
+			</div>
+		</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<div style="position:static;width:1.5ch; height:1em;" title="tree">
+				<div style="position:relative;">
+					<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:0em; color:brown;">i</p>
+				</div>
+			</div>
+		</td>
+		<td>0</td>
+		<td>
+			<div style="position:static;width:1.5ch; height:1em;" title="tree">
+				<div style="position:relative;">
+					<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:0em; color:brown;">i</p>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div style="position:static;width:1.5ch; height:1em;" title="tree">
+				<div style="position:relative;">
+					<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:0em; color:brown;">i</p>
+				</div>
+			</div>
+		</td>
+		<td>a</td>
+		<td>b</td>
+		<td>
+			<div style="position:static;width:1.5ch; height:1em;" title="tree">
+				<div style="position:relative;">
+					<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:0em; color:brown;">i</p>
+				</div>
+			</div>
+		</td>
+	</tr> -->
+	
+<!-- 	<div style="display:grid; grid-row-gap:0; grid-gap:0; grid-template-columns: repeat(10, 1fr);height:10em; width: 70ch; text-align:center; align-content:stretch; justify-content:space-evenly; align-items:stretch; justify-items:stretch;">
+		<div>a</div>
+		<div>b
+		</div>
+		<div>c</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+
+		<div>a</div>
+		<div>0</div>
+		<div style="display:flex; margin:0; justify-content:center; align-items:center; background-color:blue; ">
+			<div style="position:relative; top:-1em; left: -.3ch ">
+					<p style="position:absolute; top:-.8em; left:-.5ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:-.3em; color:brown;">i</p>
+			</div>
+		</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+		
+		<div>a</div>
+		<div>b</div>
+		<div>c</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+		
+		<div>a</div>
+		<div>b</div>
+		<div>c</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+	</div> -->
+	
+		<div style="display:grid; grid-row-gap:0; grid-gap:0; grid-template-columns: repeat(10, 1fr); height:20em; width:100ch;">
+		<div>a</div>
+		<div>b
+		</div>
+		<div>c</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+
+		<div>a</div>
+		<div>0</div>
+		<div style="display:flex; margin:0; justify-content:center; align-items:center; background-color:lightblue; ">
+			<div id="the-div" style="position:relative; top:-1em; left: -.3ch ">
+					<p style="position:absolute; top:-.8em; left:-.5ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:-.3em; color:brown;">i</p>
+			</div>
+		</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+		
+		<div>a</div>
+		<div>b</div>
+		<div>c</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+		
+		<div>a</div>
+		<div>b</div>
+		<div>c</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+	</div.
+	
+	
+	</tbody></table>
+
+<script>
+		let animdiv = document.getElementById("the-div");
+		setTimeout(() => {
+			animdiv.innerHTML = "<p style=\"position:absolute;\">Hello JavaScript!<p>";
+		}, 1000);
+		
+</script>
+</body>
+</html>
