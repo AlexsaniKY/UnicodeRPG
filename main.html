@@ -15,6 +15,18 @@
 			border-spacing:0;
 			border-collapse: collapse;
 			}
+			
+		.grid-tile{
+			display:flex;
+			justify-content:center;
+			align-items:center;
+		}
+		
+		.spr-con{
+			position:relative;
+			top:-1em;
+			left:-.5ch;
+		}
 	</style>
 	<script src="jquery-3.3.1.min.js"></script>
 </head>
@@ -63,8 +75,8 @@
 
 		<div>a</div>
 		<div>0</div>
-		<div style="display:flex; margin:0; justify-content:center; align-items:center; background-color:lightblue; ">
-			<div id="the-div" style="position:relative; top:-1em; left: -.5ch ">
+		<div class="grid-tile" style="background-color:lightblue; ">
+			<div id="the-div" class="spr-con">
 					<p style="position:absolute; top:-.8em; left:-.2ch; color:green;">&#x13dc</p>
 					<p style="position:absolute; top:-.3em; left:.3ch; color:brown;">i</p>
 			</div>
@@ -98,10 +110,9 @@
 		<div>h</div>
 		<div>i</div>
 		<div>j</div>
-	</div.
+	</div>
+
 	
-	
-	</tbody></table>
 
 <script>
 		let animdiv = document.getElementById("the-div");
