@@ -105,22 +105,45 @@
 
 <script>
 		let animdiv = document.getElementById("the-div");
-		let replace_child = 
+		let replace_child;
 		
-		setTimeout(() => {
+		if(false)setTimeout(() => {
 			let newp = document.createElement("p");
 			
 			newp.style.position = "absolute";
 			newp.style.top = "-.5em";
-			newp.style.left = "-.3ch";
+			newp.style.left = "calc(-.3ch + 20px)";
 			newp.innerHTML = "Q";
 			
 			while(animdiv.firstChild){
 				animdiv.removeChild(animdiv.firstChild);
 			}
-			
+		
 			animdiv.appendChild(newp);
 		}, 1000);
+		
+		
+		
+		let move_p = document.createElement("p");
+		move_p.style.position = "absolute";
+		move_p.style.top = "-.5em";
+		move_p.style.left = "-.3ch";
+		move_p.innerHTML = "Q";
+		move_p.id = "the-p";
+			
+		while(animdiv.firstChild){
+			animdiv.removeChild(animdiv.firstChild);
+		}
+	
+		animdiv.appendChild(move_p);
+			let p;
+		setInterval(() => {
+			p = document.getElementById("the-p");
+		
+			p.style.top = "calc(-.5em + " + Math.round( 10 * Math.random() -5) + "px)"; 
+			p.style.left = "calc(-.3ch + " + Math.round( 10 * Math.random() -5) + "px)";
+			
+		}, 200);
 		
 </script>
 </body>
