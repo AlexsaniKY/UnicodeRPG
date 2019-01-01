@@ -155,31 +155,41 @@
 			p.style.left = "calc(-.3ch + " + Math.round( 10 * Math.random() -5) + "px)";
 		}, 200);
 		
+		
+		//programmatic grid
 
 		let newgriddiv = document.getElementById("new-grid-div");
 		newgriddiv.style.display = "grid";
 		newgriddiv.style.gridGap = 0;
 		newgriddiv.style.gridTemplateColumns = "repeat(10, 1fr)";
-		newgriddiv.style.height = "5em";
-		newgriddiv.style.width = "15ch";
+		newgriddiv.style.height = "15em";
+		newgriddiv.style.width = "25ch";
 		
 		
-		gridtile = document.createElement("div");
+		let gridtile = document.createElement("div");
 		gridtile.className = "grid-tile";
 		
-		spritecontainer = document.createElement("div");
+		let spritecontainer = document.createElement("div");
 		spritecontainer.className = "spr-con";
 		
+		let sprite = document.createElement("p");
+		sprite.style.position = "absolute";
+		sprite.style.top = "-.5em";
+		
+		spritecontainer.appendChild(sprite);
 		gridtile.appendChild(spritecontainer);
 		
 		let clone;
-		for(let y=0; y<10; y++){
-			for(let x=0; x<10; x++){
-			clone = gridtile.cloneNode(true);
-				newgriddiv.appendChild(clone);
+		let rows = 10;
+		let cols = 10;
+		for(let y=0; y<rows; y++){
+			for(let x=0; x<cols; x++){
+				clone = gridtile.cloneNode(true);
+				clone.id = "" + y + "," + x;
+				clone.firstChild.firstChild.innerHTML = "&#" + ((rows*y + x)%26 + 65); 
 				
+				newgriddiv.appendChild(clone);
 			}
-		
 		}
 		
 		
