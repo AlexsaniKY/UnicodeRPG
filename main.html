@@ -60,7 +60,7 @@
 	<br>
 	
 	
-		<div style="display:grid; grid-row-gap:0; grid-gap:0; grid-template-columns: repeat(10, 1fr); height:5em; width:15ch;">
+		<div style="display:grid; grid-gap:0; grid-template-columns: repeat(10, 1fr); height:5em; width:15ch;">
 		<div>a</div>
 		<div>b
 		</div>
@@ -112,11 +112,11 @@
 		<div>j</div>
 	</div>
 
-	
+	<div id="new-grid-div"></div>
 
 <script>
 		let animdiv = document.getElementById("the-div");
-		let replace_child;
+
 		
 		if(false)setTimeout(() => {
 			let newp = document.createElement("p");
@@ -153,8 +153,36 @@
 		
 			p.style.top = "calc(-.5em + " + Math.round( 10 * Math.random() -5) + "px)"; 
 			p.style.left = "calc(-.3ch + " + Math.round( 10 * Math.random() -5) + "px)";
-			
 		}, 200);
+		
+
+		let newgriddiv = document.getElementById("new-grid-div");
+		newgriddiv.style.display = "grid";
+		newgriddiv.style.gridGap = 0;
+		newgriddiv.style.gridTemplateColumns = "repeat(10, 1fr)";
+		newgriddiv.style.height = "5em";
+		newgriddiv.style.width = "15ch";
+		
+		
+		gridtile = document.createElement("div");
+		gridtile.className = "grid-tile";
+		
+		spritecontainer = document.createElement("div");
+		spritecontainer.className = "spr-con";
+		
+		gridtile.appendChild(spritecontainer);
+		
+		let clone;
+		for(let y=0; y<10; y++){
+			for(let x=0; x<10; x++){
+			clone = gridtile.cloneNode(true);
+				newgriddiv.appendChild(clone);
+				
+			}
+		
+		}
+		
+		
 		
 </script>
 </body>
