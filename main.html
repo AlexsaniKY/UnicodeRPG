@@ -48,7 +48,7 @@
 	<br>
 	
 	
-		<div style="display:grid; grid-row-gap:0; grid-gap:0; grid-template-columns: repeat(10, 1fr); height:20em; width:100ch;">
+		<div style="display:grid; grid-row-gap:0; grid-gap:0; grid-template-columns: repeat(10, 1fr); height:5em; width:15ch;">
 		<div>a</div>
 		<div>b
 		</div>
@@ -64,9 +64,9 @@
 		<div>a</div>
 		<div>0</div>
 		<div style="display:flex; margin:0; justify-content:center; align-items:center; background-color:lightblue; ">
-			<div id="the-div" style="position:relative; top:-1em; left: -.3ch ">
-					<p style="position:absolute; top:-.8em; left:-.5ch; color:green;">&#x13dc</p>
-					<p style="position:absolute; top:-.3em; color:brown;">i</p>
+			<div id="the-div" style="position:relative; top:-1em; left: -.5ch ">
+					<p style="position:absolute; top:-.8em; left:-.2ch; color:green;">&#x13dc</p>
+					<p style="position:absolute; top:-.3em; left:.3ch; color:brown;">i</p>
 			</div>
 		</div>
 		<div>d</div>
@@ -105,8 +105,16 @@
 
 <script>
 		let animdiv = document.getElementById("the-div");
+		
 		setTimeout(() => {
-			animdiv.innerHTML = "<p style=\"position:absolute;\">Hello JavaScript!<p>";
+			let newp = document.createElement("p");
+			
+			newp.style.position = "absolute";
+			newp.style.top = "-5em";
+			newp.style.left = "-.3ch";
+			newp.innerHTML = "Q";
+			
+			animdiv.innerHTML = "<p style=\"position:absolute; top:0;\">Hello JavaScript!<p>";
 		}, 1000);
 		
 </script>
