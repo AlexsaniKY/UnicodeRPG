@@ -127,7 +127,7 @@
 					ch: "&#x289e",
 					color: "sandybrown",
 					offsetX: .0,
-					offsetY: .0
+					offsetY: -.8
 					}
 				]
 		}
@@ -215,24 +215,48 @@
 	}
 	
 	//initialize letter grid
-	let newgriddiv = document.getElementById("new-grid-div");
-	newgriddiv.replaceWith(createGrid(10,10, "20ch" , "15em"));
+	
+	//let newgriddiv = document.getElementById("new-grid-div");
+	//newgriddiv.replaceWith(createGrid(10,10, "20ch" , "15em"));
 
-	let tile;
-	let spr;
-	let spr_p;
-	for(let y=0; y<10; y++){
-		for(let x=0; x<10; x++){
-			tile = document.getElementById(y + "," + x);
-			spr = sprite_base.cloneNode();
-			spr_p = sprite_part_base.cloneNode();
-			spr_p.style.top = "-.5em";
-			spr_p.innerHTML = "&#" + ((10*y + x)%26 + 65);
-			
-			spr.appendChild(spr_p);
-			tile.appendChild(spr);
+	function node_from_map(map, tileset, sprites){
+		let sprite_nodes = {};
+		for(s of sprites) sprite_nodes[s.name] = node_from_sprite(s);
+	
+		let x = map[0].length;
+		let y = map.length;
+		let grid = createGrid(x, y, x*2 + "ch", y*1.5 + "em");
+		
+		let node;
+		for(let j = 0; j < y; j++){
+			for(let i = 0; i < x; i++){
+				node = grid.childNodes[j*y + i];
+				console.log(node);
+				console.log(sprite_nodes[tileset[map[j][i]]]);
+				node.appendChild( sprite_nodes[ tileset[ map[j][i]] ].cloneNode(true) );
 			}
-		}
+		} 
+		return grid;
+	}
+	
+	let body = document.getElementsByTagName("body")[0];
+	body.appendChild(node_from_map(map, tileset, sprites));
+	
+	//let tile;
+	//let spr;
+	//let spr_p;
+	//for(let y=0; y<10; y++){
+	//	for(let x=0; x<10; x++){
+	//		tile = document.getElementById(y + "," + x);
+	//		spr = sprite_base.cloneNode();
+	//		spr_p = sprite_part_base.cloneNode();
+	//		spr_p.style.top = "-.5em";
+	//		spr_p.innerHTML = "&#" + ((10*y + x)%26 + 65);
+	//		
+	//		spr.appendChild(spr_p);
+	//		tile.appendChild(spr);
+	//		}
+	//	}
 		
 		
 		
