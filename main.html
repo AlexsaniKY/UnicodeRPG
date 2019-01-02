@@ -92,16 +92,51 @@
 	let sprite_part_base = document.createElement("p");
 	sprite_part_base.style.position = "absolute";
 	
-	let grass = {
-		name: "Grass",
-		chars:[{
-				ch: "&#x22ce",
-				color: "green",
-				offsetX: .05,
-				offsetY: -.6
-				}
-		]
+	let sprites = [
+		{
+			name: "Grass",
+			chars:[{
+					ch: "&#x22ce",
+					color: "green",
+					offsetX: .05,
+					offsetY: -.6
+					}
+				]
+		},
+		{
+			name: "Tree",
+			chars:[{
+					ch: "&#x13dc",
+					color: "green",
+					offsetX: -.2,
+					offsetY: -.8
+					},
+					{
+					ch: "i",
+					color: "brown",
+					offsetX: 0,
+					offsetY: -.3
+					}
+				]
+		}
+
+	];
+	
+	
+	let tileset = {
+		0: "Grass",
+		1: "Tree",
+		2: "Dirt"
 	};
+	let map = [
+		[1,1,1,1,1],
+		[1,0,0,2,1],
+		[1,0,2,2,1],
+		[1,0,2,0,1],
+		[1,1,2,1,1]
+	];
+	
+	
 	
 	function node_from_sprite(sprite_object){
 		let sprite = sprite_base.cloneNode();
@@ -142,11 +177,10 @@
 	
 		p.style.top = "calc(-.5em + " + Math.round( 10 * Math.random() -5) + "px)"; 
 		p.style.left = "calc(-.3ch + " + Math.round( 10 * Math.random() -5) + "px)";
-	}, 200);
+		}, 200);
 	
 	
 	//programmatic grid
-
 	let newgriddiv = document.getElementById("new-grid-div");
 	newgriddiv.style.display = "grid";
 	newgriddiv.style.gridGap = 0;
@@ -177,14 +211,20 @@
 			clone.firstChild.firstChild.innerHTML = "&#" + ((rows*y + x)%26 + 65); 
 			
 			newgriddiv.appendChild(clone);
+			}
 		}
-	}
 		
 	let grass_element = document.getElementById("3,3");
 	while(grass_element.firstChild){
 		grass_element.removeChild(grass_element.firstChild);
 	}
-	grass_element.appendChild(node_from_sprite(grass));
+	grass_element.appendChild(node_from_sprite(sprites[0]));
+	
+	let tree_element = document.getElementById("4,4");
+	while(tree_element.firstChild){
+		tree_element.removeChild(tree_element.firstChild);
+	}
+	tree_element.appendChild(node_from_sprite(sprites[1]));
 		
 </script>
 </body>
