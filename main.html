@@ -7,8 +7,10 @@
 		.grid-con{
 			font-family:monospace;
 			font-size:16px;
+			display:grid;
+			grid-gap:0;
 		}
-			
+
 		.grid-tile{
 			display:flex;
 			justify-content:center;
@@ -118,8 +120,17 @@
 					offsetY: -.3
 					}
 				]
+		},
+		{
+			name: "Dirt",
+			chars:[{
+					ch: "&#x289e",
+					color: "sandybrown",
+					offsetX: .0,
+					offsetY: .0
+					}
+				]
 		}
-
 	];
 	
 	
@@ -180,39 +191,50 @@
 		}, 200);
 	
 	
-	//programmatic grid
-	let newgriddiv = document.getElementById("new-grid-div");
-	newgriddiv.style.display = "grid";
-	newgriddiv.style.gridGap = 0;
-	newgriddiv.style.gridTemplateColumns = "repeat(10, 1fr)";
-	newgriddiv.style.height = "12em";
-	newgriddiv.style.width = "20ch";
+	//programmatic grid definitions
+	let grid_template = document.createElement("div");
+	grid_template.className = "grid-con";
 	
 	let gridtile = document.createElement("div");
 	gridtile.className = "grid-tile";
 	
-	let spritecontainer = document.createElement("div");
-	spritecontainer.className = "spr-con";
-	
-	let sprite = document.createElement("p");
-	sprite.style.position = "absolute";
-	sprite.style.top = "-.5em";
-	
-	spritecontainer.appendChild(sprite);
-	gridtile.appendChild(spritecontainer);
-	
-	let clone;
-	let rows = 10;
-	let cols = 10;
-	for(let y=0; y<rows; y++){
-		for(let x=0; x<cols; x++){
-			clone = gridtile.cloneNode(true);
-			clone.id = "" + y + "," + x;
-			clone.firstChild.firstChild.innerHTML = "&#" + ((rows*y + x)%26 + 65); 
-			
-			newgriddiv.appendChild(clone);
+	function createGrid(x, y, width, height){
+		let newgriddiv = grid_template.cloneNode();
+		newgriddiv.style.gridTemplateColumns = "repeat(" + x + ", 1fr)";
+		newgriddiv.style.height = height;
+		newgriddiv.style.width = width;
+		let clone;
+		for(let row=0; row<y; row++){
+			for(let col=0; col<x; col++){
+				clone = gridtile.cloneNode(true);
+				clone.id = "" + row + "," + col;
+				newgriddiv.appendChild(clone);
 			}
 		}
+		return newgriddiv;
+	}
+	
+	//initialize letter grid
+	let newgriddiv = document.getElementById("new-grid-div");
+	newgriddiv.replaceWith(createGrid(10,10, "20ch" , "15em"));
+
+	let tile;
+	let spr;
+	let spr_p;
+	for(let y=0; y<10; y++){
+		for(let x=0; x<10; x++){
+			tile = document.getElementById(y + "," + x);
+			spr = sprite_base.cloneNode();
+			spr_p = sprite_part_base.cloneNode();
+			spr_p.style.top = "-.5em";
+			spr_p.innerHTML = "&#" + ((10*y + x)%26 + 65);
+			
+			spr.appendChild(spr_p);
+			tile.appendChild(spr);
+			}
+		}
+		
+		
 		
 	let grass_element = document.getElementById("3,3");
 	while(grass_element.firstChild){
