@@ -16,6 +16,11 @@
 			border-collapse: collapse;
 			}
 			
+		.grid-con{
+			font-family:monospace;
+			font-size:16px;
+		}
+			
 		.grid-tile{
 			display:flex;
 			justify-content:center;
@@ -28,37 +33,10 @@
 			left:-.5ch;
 		}
 	</style>
-	<script src="jquery-3.3.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
-	<h1>This is a Heading</h1>
-	<p>This is a paragraph.</p>
-	<div style="position:relative;width:1.5ch; height:1em;">
-		<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
-		<p style="position:absolute; top:0em; color:brown;">i</p>
-	</div>
-	<div style="position:static;width:1.5ch; height:1em;">
-		<div style="position:relative;">
-			<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
-			<p style="position:absolute; top:0em; color:brown;">i</p>
-		</div>
-	</div>
-	<div style="position:static;width:1.5ch; height:1em;">
-		<div style="position:relative;">
-			<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
-			<p style="position:absolute; top:0em; color:brown;">i</p>
-		</div>
-	</div>
-	<div style="position:static;width:1.5ch; height:1em;">
-		<div style="position:relative;">
-			<p style="position:absolute; top:-.5em; left:-.5ch; color:green;">&#x13dc</p>
-			<p style="position:absolute; top:0em; left:0ch; color:brown;">i</p>
-		</div>
-	</div>
-	<br>
-	<br>
-	
 	
 		<div style="display:grid; grid-gap:0; grid-template-columns: repeat(10, 1fr); height:5em; width:15ch;">
 		<div>a</div>
@@ -76,9 +54,24 @@
 		<div>a</div>
 		<div>0</div>
 		<div class="grid-tile" style="background-color:lightblue; ">
-			<div id="the-div" class="spr-con">
+			<div id="anim-div" class="spr-con">
 					<p style="position:absolute; top:-.8em; left:-.2ch; color:green;">&#x13dc</p>
 					<p style="position:absolute; top:-.3em; left:.3ch; color:brown;">i</p>
+			</div>
+		</div>
+		<div>d</div>
+		<div>e</div>
+		<div>f</div>
+		<div>g</div>
+		<div>h</div>
+		<div>i</div>
+		<div>j</div>
+		
+		<div>a</div>
+		<div>b</div>
+		<div class="grid-tile" style="background-color:lightblue; ">
+			<div class="spr-con">
+					<p style="position:absolute; top:-.5em; left:-.2ch; color:green;">&#x22ce</p>
 			</div>
 		</div>
 		<div>d</div>
@@ -99,100 +92,111 @@
 		<div>h</div>
 		<div>i</div>
 		<div>j</div>
-		
-		<div>a</div>
-		<div>b</div>
-		<div>c</div>
-		<div>d</div>
-		<div>e</div>
-		<div>f</div>
-		<div>g</div>
-		<div>h</div>
-		<div>i</div>
-		<div>j</div>
 	</div>
 
-	<div id="new-grid-div"></div>
+	<div id="new-grid-div" class="grid-con"></div>
 
 <script>
-		let animdiv = document.getElementById("the-div");
-
-		
-		if(false)setTimeout(() => {
-			let newp = document.createElement("p");
-			
-			newp.style.position = "absolute";
-			newp.style.top = "-.5em";
-			newp.style.left = "calc(-.3ch + 20px)";
-			newp.innerHTML = "Q";
-			
-			while(animdiv.firstChild){
-				animdiv.removeChild(animdiv.firstChild);
-			}
-		
-			animdiv.appendChild(newp);
-		}, 1000);
-		
-		
-		
-		let move_p = document.createElement("p");
-		move_p.style.position = "absolute";
-		move_p.style.top = "-.5em";
-		move_p.style.left = "-.3ch";
-		move_p.innerHTML = "Q";
-		move_p.id = "the-p";
-			
-		while(animdiv.firstChild){
-			animdiv.removeChild(animdiv.firstChild);
-		}
+	//sprite base is used to clone character based sprites
+	let sprite_base = document.createElement("div");
+	sprite_base.className = "spr-con";
+	//sprite part base is used to clone each character in a sprite
+	let sprite_part_base = document.createElement("p");
+	sprite_part_base.style.position = "absolute";
 	
-		animdiv.appendChild(move_p);
-			let p;
-		setInterval(() => {
-			p = document.getElementById("the-p");
-		
-			p.style.top = "calc(-.5em + " + Math.round( 10 * Math.random() -5) + "px)"; 
-			p.style.left = "calc(-.3ch + " + Math.round( 10 * Math.random() -5) + "px)";
-		}, 200);
-		
-		
-		//programmatic grid
+	let grass = {
+		name: "Grass",
+		chars:[{
+				ch: "&#x22ce",
+				color: "green",
+				offsetX: .05,
+				offsetY: -.6
+				}
+		]
+	};
+	
+	function node_from_sprite(sprite_object){
+		let sprite = sprite_base.cloneNode();
 
-		let newgriddiv = document.getElementById("new-grid-div");
-		newgriddiv.style.display = "grid";
-		newgriddiv.style.gridGap = 0;
-		newgriddiv.style.gridTemplateColumns = "repeat(10, 1fr)";
-		newgriddiv.style.height = "15em";
-		newgriddiv.style.width = "25ch";
-		
-		
-		let gridtile = document.createElement("div");
-		gridtile.className = "grid-tile";
-		
-		let spritecontainer = document.createElement("div");
-		spritecontainer.className = "spr-con";
-		
-		let sprite = document.createElement("p");
-		sprite.style.position = "absolute";
-		sprite.style.top = "-.5em";
-		
-		spritecontainer.appendChild(sprite);
-		gridtile.appendChild(spritecontainer);
-		
-		let clone;
-		let rows = 10;
-		let cols = 10;
-		for(let y=0; y<rows; y++){
-			for(let x=0; x<cols; x++){
-				clone = gridtile.cloneNode(true);
-				clone.id = "" + y + "," + x;
-				clone.firstChild.firstChild.innerHTML = "&#" + ((rows*y + x)%26 + 65); 
-				
-				newgriddiv.appendChild(clone);
-			}
+		let sprite_part;
+		for(s of sprite_object.chars){
+			sprite_part = sprite_part_base.cloneNode();
+
+			sprite_part.innerHTML = s.ch;
+			sprite_part.style.color = s.color;
+			sprite_part.style.top = s.offsetY + "em";
+			sprite_part.style.left = s.offsetX + "ch";
+
+			sprite.appendChild(sprite_part);
 		}
+		return sprite;
+	}
+	
+	
+	//animate positioning
+	let animdiv = document.getElementById("anim-div");
+	
+	let move_p = document.createElement("p");
+	move_p.style.position = "absolute";
+	move_p.style.top = "-.5em";
+	move_p.style.left = "-.3ch";
+	move_p.innerHTML = "Q";
+	move_p.id = "the-p";
 		
+	while(animdiv.firstChild){
+		animdiv.removeChild(animdiv.firstChild);
+	}
+
+	animdiv.appendChild(move_p);
+		let p;
+	setInterval(() => {
+		p = document.getElementById("the-p");
+	
+		p.style.top = "calc(-.5em + " + Math.round( 10 * Math.random() -5) + "px)"; 
+		p.style.left = "calc(-.3ch + " + Math.round( 10 * Math.random() -5) + "px)";
+	}, 200);
+	
+	
+	//programmatic grid
+
+	let newgriddiv = document.getElementById("new-grid-div");
+	newgriddiv.style.display = "grid";
+	newgriddiv.style.gridGap = 0;
+	newgriddiv.style.gridTemplateColumns = "repeat(10, 1fr)";
+	newgriddiv.style.height = "12em";
+	newgriddiv.style.width = "20ch";
+	
+	let gridtile = document.createElement("div");
+	gridtile.className = "grid-tile";
+	
+	let spritecontainer = document.createElement("div");
+	spritecontainer.className = "spr-con";
+	
+	let sprite = document.createElement("p");
+	sprite.style.position = "absolute";
+	sprite.style.top = "-.5em";
+	
+	spritecontainer.appendChild(sprite);
+	gridtile.appendChild(spritecontainer);
+	
+	let clone;
+	let rows = 10;
+	let cols = 10;
+	for(let y=0; y<rows; y++){
+		for(let x=0; x<cols; x++){
+			clone = gridtile.cloneNode(true);
+			clone.id = "" + y + "," + x;
+			clone.firstChild.firstChild.innerHTML = "&#" + ((rows*y + x)%26 + 65); 
+			
+			newgriddiv.appendChild(clone);
+		}
+	}
 		
+	let grass_element = document.getElementById("3,3");
+	while(grass_element.firstChild){
+		grass_element.removeChild(grass_element.firstChild);
+	}
+	grass_element.appendChild(node_from_sprite(grass));
 		
 </script>
 </body>
