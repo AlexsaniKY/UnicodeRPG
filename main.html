@@ -30,10 +30,16 @@
 	<div id="new-grid-div" class="grid-con"></div>
 
 <script>
-	//sprite base is used to clone character based sprites
+	//grid base defines the grid's width and font size, parent to grid tiles
+	let grid_base = document.createElement("div");
+	grid_base.className = "grid-con";
+	//grid tile defines each grid square, contains sprites
+	let grid_tile_base = document.createElement("div");
+	grid_tile_base.className = "grid-tile";
+	//sprite contains character based sprite parts
 	let sprite_base = document.createElement("div");
 	sprite_base.className = "spr-con";
-	//sprite part base is used to clone each character in a sprite
+	//sprite part contains each character in a sprite
 	let sprite_part_base = document.createElement("p");
 	sprite_part_base.style.position = "absolute";
 	
@@ -122,7 +128,7 @@
 	];
 	
 	
-	
+	//constructs a sprite node
 	function node_from_sprite(sprite_object){
 		let sprite = sprite_base.cloneNode();
 
@@ -142,21 +148,15 @@
 	
 	
 	//programmatic grid definitions
-	let grid_template = document.createElement("div");
-	grid_template.className = "grid-con";
-	
-	let gridtile = document.createElement("div");
-	gridtile.className = "grid-tile";
-	
 	function createGrid(x, y, width, height){
-		let newgriddiv = grid_template.cloneNode();
+		let newgriddiv = grid_base.cloneNode();
 		newgriddiv.style.gridTemplateColumns = "repeat(" + x + ", 1fr)";
 		newgriddiv.style.height = height;
 		newgriddiv.style.width = width;
 		let clone;
 		for(let row=0; row<y; row++){
 			for(let col=0; col<x; col++){
-				clone = gridtile.cloneNode(true);
+				clone = grid_tile_base.cloneNode(true);
 				clone.id = "" + row + "," + col;
 				newgriddiv.appendChild(clone);
 			}
