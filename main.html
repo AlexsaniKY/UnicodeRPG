@@ -27,7 +27,7 @@
 </head>
 <body>
 
-	<div id="new-grid-div" class="grid-con"></div>
+	<div id="new-grid-div"></div>
 
 <script>
 	//grid base defines the grid's width and font size, parent to grid tiles
@@ -42,6 +42,77 @@
 	//sprite part contains each character in a sprite
 	let sprite_part_base = document.createElement("p");
 	sprite_part_base.style.position = "absolute";
+	
+
+	//constructs a sprite node from sprite object definition
+	function node_from_sprite(sprite_object){
+		let sprite = sprite_base.cloneNode();
+
+		let sprite_part;
+		for(s of sprite_object.chars){
+			sprite_part = sprite_part_base.cloneNode();
+
+			sprite_part.innerHTML = s.ch;
+			sprite_part.style.color = s.color;
+			sprite_part.style.top = s.offsetY + "em";
+			sprite_part.style.left = s.offsetX + "ch";
+
+			sprite.appendChild(sprite_part);
+		}
+		return sprite;
+	}
+	
+	//Constructs Grid.  Width and height should be defined in ch and em respectively
+	function create_grid(x, y, width, height){
+		let newgriddiv = grid_base.cloneNode();
+		newgriddiv.style.gridTemplateColumns = "repeat(" + x + ", 1fr)";
+		newgriddiv.style.height = height;
+		newgriddiv.style.width = width;
+		let clone;
+		for(let row=0; row<y; row++){
+			for(let col=0; col<x; col++){
+				clone = grid_tile_base.cloneNode(true);
+				clone.id = "" + row + "," + col;
+				newgriddiv.appendChild(clone);
+			}
+		}
+		return newgriddiv;
+	}
+	
+	//constructs html node from map defining tiles,
+	//tileset mapping tile id -> sprite name
+	//sprite name references the sprite in "sprites"
+	function node_from_map(map, tileset, sprites){
+		let sprite_nodes = {};
+		for(s of sprites) sprite_nodes[s.name] = node_from_sprite(s);
+	
+		let x = map[0].length;
+		let y = map.length;
+		let grid = create_grid(
+									x, 
+									y, 
+									x*1.5 + "ch", 
+									y*1.2 + "em"
+									);
+		let node;
+		for(let j = 0; j < y; j++){
+			for(let i = 0; i < x; i++){
+				node = grid.childNodes[j*x + i];
+				//map position -> tile id
+				//tile id -> sprite name in tileset
+				//sprite name -> sprite node
+				//clone sprite node and append
+				node.appendChild( 
+					sprite_nodes[ 
+						tileset[ 
+							map[j][i]
+							] 
+						].cloneNode(true) 
+					);
+			}
+		} 
+		return grid;
+	}
 	
 	// sprites are defined as objects with:
 	// name,
@@ -127,78 +198,10 @@
 		[1,1,2,1,3,1]
 	];
 	
-	
-	//constructs a sprite node
-	function node_from_sprite(sprite_object){
-		let sprite = sprite_base.cloneNode();
+	//add a constructed grid to document
+	let newgrid = document.getElementById("new-grid-div");
+	newgrid.appendChild(node_from_map(map, tileset, sprites));
 
-		let sprite_part;
-		for(s of sprite_object.chars){
-			sprite_part = sprite_part_base.cloneNode();
-
-			sprite_part.innerHTML = s.ch;
-			sprite_part.style.color = s.color;
-			sprite_part.style.top = s.offsetY + "em";
-			sprite_part.style.left = s.offsetX + "ch";
-
-			sprite.appendChild(sprite_part);
-		}
-		return sprite;
-	}
-	
-	
-	//programmatic grid definitions
-	function createGrid(x, y, width, height){
-		let newgriddiv = grid_base.cloneNode();
-		newgriddiv.style.gridTemplateColumns = "repeat(" + x + ", 1fr)";
-		newgriddiv.style.height = height;
-		newgriddiv.style.width = width;
-		let clone;
-		for(let row=0; row<y; row++){
-			for(let col=0; col<x; col++){
-				clone = grid_tile_base.cloneNode(true);
-				clone.id = "" + row + "," + col;
-				newgriddiv.appendChild(clone);
-			}
-		}
-		return newgriddiv;
-	}
-	
-
-	function node_from_map(map, tileset, sprites){
-		let sprite_nodes = {};
-		for(s of sprites) sprite_nodes[s.name] = node_from_sprite(s);
-	
-		let x = map[0].length;
-		let y = map.length;
-		let grid = createGrid(x, y, x*1.5 + "ch", y*1.2 + "em");
-		
-		let node;
-		for(let j = 0; j < y; j++){
-			for(let i = 0; i < x; i++){
-				node = grid.childNodes[j*x + i];
-				node.appendChild( sprite_nodes[ tileset[ map[j][i]] ].cloneNode(true) );
-			}
-		} 
-		return grid;
-	}
-	
-	let body = document.getElementsByTagName("body")[0];
-	body.appendChild(node_from_map(map, tileset, sprites));
-		
-		
-		
-	let grass_element = document.getElementById("3,3");
-	while(grass_element.firstChild){
-		grass_element.removeChild(grass_element.firstChild);
-	}
-	grass_element.appendChild(node_from_sprite(sprites[0]));
-	
-	let tree_element = document.getElementById("4,4");
-	while(tree_element.firstChild){
-		tree_element.removeChild(tree_element.firstChild);
-	}
-	tree_element.appendChild(node_from_sprite(sprites[1]));
 		
 </script>
 </body>
