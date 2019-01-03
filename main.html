@@ -37,6 +37,13 @@
 	let sprite_part_base = document.createElement("p");
 	sprite_part_base.style.position = "absolute";
 	
+	// sprites are defined as objects with:
+	// name,
+	// chars: [{ch , color, offsetX, offsetY}, ]
+	// where each char is a unicode string (generally a single character)
+	// that is assigned a color, and a set of offsets where:
+	// positive x => right
+	// positive y => down
 	let sprites = [
 		{
 			name: "Grass",
@@ -82,6 +89,7 @@
 		},
 		{
 			name: "Water",
+			background: "lightblue",//TODO: restructure sprites to allow background colors
 			chars:[{
 				ch: "&#x2248",
 				color: "blue",
@@ -169,8 +177,6 @@
 		for(let j = 0; j < y; j++){
 			for(let i = 0; i < x; i++){
 				node = grid.childNodes[j*x + i];
-				console.log(node);
-				console.log(sprite_nodes[tileset[map[j][i]]]);
 				node.appendChild( sprite_nodes[ tileset[ map[j][i]] ].cloneNode(true) );
 			}
 		} 
