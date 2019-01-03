@@ -102,22 +102,28 @@
 					color: "green",
 					offsetX: .05,
 					offsetY: -.6
+					},
+					{
+					ch: "v",
+					color: "green",
+					offsetX:0.08,
+					offsetY:-.45
 					}
 				]
 		},
 		{
 			name: "Tree",
 			chars:[{
-					ch: "&#x13dc",
-					color: "green",
-					offsetX: -.2,
-					offsetY: -.8
-					},
-					{
 					ch: "i",
 					color: "brown",
 					offsetX: 0,
 					offsetY: -.3
+					},
+					{
+					ch: "&#x13dc",
+					color: "green",
+					offsetX: -.2,
+					offsetY: -.8
 					}
 				]
 		},
@@ -130,6 +136,22 @@
 					offsetY: -.8
 					}
 				]
+		},
+		{
+			name: "Water",
+			chars:[{
+				ch: "&#x2248",
+				color: "blue",
+				offsetX: 0,
+				offsetY: -.3
+				},
+				{
+				ch: "&#x2248",
+				color: "blue",
+				offsetX: 0,
+				offsetY: -.8
+				}
+			]
 		}
 	];
 	
@@ -137,14 +159,15 @@
 	let tileset = {
 		0: "Grass",
 		1: "Tree",
-		2: "Dirt"
+		2: "Dirt",
+		3: "Water"
 	};
 	let map = [
-		[1,1,1,1,1],
-		[1,0,0,2,1],
-		[1,0,2,2,1],
-		[1,0,2,0,1],
-		[1,1,2,1,1]
+		[1,1,1,1,1,1],
+		[1,0,0,2,3,1],
+		[1,0,2,2,3,1],
+		[1,0,2,0,3,1],
+		[1,1,2,1,3,1]
 	];
 	
 	
@@ -225,12 +248,12 @@
 	
 		let x = map[0].length;
 		let y = map.length;
-		let grid = createGrid(x, y, x*2 + "ch", y*1.5 + "em");
+		let grid = createGrid(x, y, x*1.5 + "ch", y*1.2 + "em");
 		
 		let node;
 		for(let j = 0; j < y; j++){
 			for(let i = 0; i < x; i++){
-				node = grid.childNodes[j*y + i];
+				node = grid.childNodes[j*x + i];
 				console.log(node);
 				console.log(sprite_nodes[tileset[map[j][i]]]);
 				node.appendChild( sprite_nodes[ tileset[ map[j][i]] ].cloneNode(true) );
