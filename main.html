@@ -12,6 +12,12 @@
 		}
 
 		.grid-tile{
+			
+		}
+		
+		.spr-bg{
+			width:100%;
+			height:100%;
 			display:flex;
 			justify-content:center;
 			align-items:center;
@@ -34,12 +40,18 @@
 	//grid base defines the grid's width and font size, parent to grid tiles
 	let grid_base = document.createElement("div");
 	grid_base.className = "grid-con";
+	
 	//grid tile defines each grid square, contains sprites
 	let grid_tile_base = document.createElement("div");
 	grid_tile_base.className = "grid-tile";
+	
+	let sprite_bg = document.createElement("div");
+	sprite_bg.className = "spr-bg";
+	
 	//sprite contains character based sprite parts
 	let sprite_base = document.createElement("div");
 	sprite_base.className = "spr-con";
+	
 	//sprite part contains each character in a sprite
 	let sprite_part_base = document.createElement("p");
 	sprite_part_base.style.position = "absolute";
@@ -47,7 +59,10 @@
 
 	//constructs a sprite node from sprite object definition
 	function node_from_sprite(sprite_object){
-		let sprite = sprite_base.cloneNode();
+		let sprite = sprite_bg.cloneNode();
+		if(sprite_object.background) sprite.style.backgroundColor = sprite_object.background;
+		
+		let sprite_container = sprite_base.cloneNode();
 
 		let sprite_part;
 		for(s of sprite_object.chars){
@@ -58,8 +73,11 @@
 			sprite_part.style.top = s.offsetY + "em";
 			sprite_part.style.left = s.offsetX + "ch";
 
-			sprite.appendChild(sprite_part);
+			sprite_container.appendChild(sprite_part);
 		}
+		
+		sprite.appendChild(sprite_container);
+		
 		return sprite;
 	}
 	
@@ -154,6 +172,7 @@
 	let sprites = [
 		{
 			name: "Grass",
+			background:"aquamarine",
 			chars:[{
 					ch: "&#x22ce",
 					color: "green",
@@ -170,6 +189,7 @@
 		},
 		{
 			name: "Tree",
+			background: "#94a893",
 			chars:[{
 					ch: "i",
 					color: "brown",
@@ -186,6 +206,7 @@
 		},
 		{
 			name: "Dirt",
+			background: "antiquewhite",
 			chars:[{
 					ch: "&#x289e",
 					color: "sandybrown",
@@ -196,7 +217,7 @@
 		},
 		{
 			name: "Water",
-			background: "lightblue",//TODO: restructure sprites to allow background colors
+			background: "#94a8d4",
 			chars:[{
 				ch: "&#x2248",
 				color: "blue",
