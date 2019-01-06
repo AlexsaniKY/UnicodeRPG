@@ -33,9 +33,10 @@
 </head>
 <body>
 
-	<div id="character" style="position:fixed; left:0.4em; top:0.6em;">@</div>
+	
 	<div id="new-grid-div"></div>
-
+	<div id="character" style="position:fixed; left:0.41em; top:0.5em;">@</div>
+	
 <script>
 	//grid base defines the grid's width and font size, parent to grid tiles
 	let grid_base = document.createElement("div");
@@ -101,12 +102,12 @@
 	//constructs html node from map defining tiles,
 	//tileset mapping tile id -> sprite name
 	//sprite name references the sprite in "sprites"
-	function node_from_map(map, tileset, sprites){
+	function mapnode_from_array(array, tileset, sprites){
 		let sprite_nodes = {};
 		for(s of sprites) sprite_nodes[s.name] = node_from_sprite(s);
 	
-		let x = map[0].length;
-		let y = map.length;
+		let x = array[0].length;
+		let y = array.length;
 		let grid = create_grid(
 									x, 
 									y, 
@@ -124,7 +125,7 @@
 				node.appendChild( 
 					sprite_nodes[ 
 						tileset[ 
-							map[j][i]
+							array[j][i]
 							] 
 						].cloneNode(true) 
 					);
@@ -187,6 +188,7 @@
 					}
 				]
 		},
+		
 		{
 			name: "Tree",
 			background: "#94a893",
@@ -204,6 +206,7 @@
 					}
 				]
 		},
+		
 		{
 			name: "Dirt",
 			background: "antiquewhite",
@@ -215,6 +218,7 @@
 					}
 				]
 		},
+		
 		{
 			name: "Water",
 			background: "#94a8d4",
@@ -232,6 +236,7 @@
 				}
 			]
 		}
+		
 	];
 	
 	
@@ -251,7 +256,7 @@
 	
 	//add a constructed grid to document
 	let newgrid = document.getElementById("new-grid-div");
-	newgrid.appendChild(node_from_map(map, tileset, sprites));
+	newgrid.appendChild(mapnode_from_array(map, tileset, sprites));
 
 		
 </script>
