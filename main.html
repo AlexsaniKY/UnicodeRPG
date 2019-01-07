@@ -28,6 +28,10 @@
 			top:-1em;
 			left:-.5ch;
 		}
+		
+		canvas{
+			border: 1px solid black;
+		}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -36,6 +40,9 @@
 	
 	<div id="new-grid-div"></div>
 	<div id="character" style="position:fixed; left:0.41em; top:0.5em;">@</div>
+	<div>
+		<canvas id="canvas_element" style= "width:100%; height:100%;"></canvas>
+	</div>
 	
 <script>
 	//grid base defines the grid's width and font size, parent to grid tiles
@@ -256,8 +263,35 @@
 	
 	//add a constructed grid to document
 	let newgrid = document.getElementById("new-grid-div");
-	newgrid.appendChild(mapnode_from_array(map, tileset, sprites));
-
+	
+	let gridx = 40, gridy = 16;
+	let gridarray = new Array(gridy);
+	for(let i=0; i<gridy; i++) gridarray[i] = new Array(gridx).fill(0);
+	
+	newgrid.appendChild(mapnode_from_array(gridarray, tileset, sprites));
+	
+	
+	let canvas  = document.getElementById("canvas_element");
+	let context = canvas.getContext("2d");
+	var width = canvas.offsetWidth;
+	var height = canvas.offsetHeight;
+	
+	let maxfps = 20;
+	let time_delta = 1000./ maxfps;
+	let last_frame_stamp = 0;
+	function gameLoop(timestamp){
+		if(timestamp < last_frame_stamp + time_delta){
+			requestAnimationFrame(gameLoop);
+			return;
+		}
+		last_frame_stamp = timestamp;
+		
+		context.fillStyle = "#000";
+		context.fillRect(0,0,1000,1000);
+		
+		requestAnimationFrame(gameLoop);
+	}
+gameLoop(0);
 		
 </script>
 </body>
