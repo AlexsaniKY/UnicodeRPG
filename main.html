@@ -273,24 +273,44 @@
 	
 	let canvas  = document.getElementById("canvas_element");
 	let context = canvas.getContext("2d");
-	var width = canvas.offsetWidth;
-	var height = canvas.offsetHeight;
+	let width = canvas.offsetWidth;
+	let height = canvas.offsetHeight;
+	
+	let tile_canvas = document.createElement("canvas");
+	tile_canvas.style.width = "32px";
+	tile_canvas.style.height = "48px";
+	let tile_context = tile_canvas.getContext("2d");
+	
+	//let image;
+	function gameInit(){
+		tile_context.fillStyle = "#00F";
+		tile_context.fillRect(0,0,32,48);
+		//image = tile_context.getImageData(0,0,32,48);
+	}
 	
 	let maxfps = 20;
-	let time_delta = 1000./ maxfps;
+	let frame_length = 1000./ maxfps;
 	let last_frame_stamp = 0;
+	let frame_delta = frame_length;
 	function gameLoop(timestamp){
-		if(timestamp < last_frame_stamp + time_delta){
+		frame_delta = last_frame_stamp + frame_length;
+		if(timestamp < frame_delta){
+			//console.log(last_frame_stamp + frame_length - timestamp);
 			requestAnimationFrame(gameLoop);
 			return;
 		}
 		last_frame_stamp = timestamp;
 		
+		context.fillStyle = "#F00";
+		context.fillRect(0,0,width,height);
+		context.drawImage(tile_canvas, 0,0);
 		context.fillStyle = "#000";
-		context.fillRect(0,0,1000,1000);
+		context.fillRect(32,48,16,16);
 		
 		requestAnimationFrame(gameLoop);
 	}
+	
+gameInit();
 gameLoop(0);
 		
 </script>
