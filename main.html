@@ -41,7 +41,10 @@
 	<div id="new-grid-div"></div>
 	<div id="character" style="position:fixed; left:0.41em; top:0.5em;">@</div>
 	<div>
-		<canvas id="canvas_element" style= "width:100%; height:100%;"></canvas>
+		<canvas id="canvas_element" ></canvas>
+	</div>
+	<div>
+		<canvas id="tileset_element"></canvas>
 	</div>
 	
 <script>
@@ -253,6 +256,9 @@
 		2: "Dirt",
 		3: "Water"
 	};
+	
+	tileset = ["Grass", "Tree", "Dirt", "Water"];
+	
 	let map = [
 		[1,1,1,1,1,1],
 		[1,0,0,2,3,1],
@@ -268,7 +274,7 @@
 	let gridarray = new Array(gridy);
 	for(let i=0; i<gridy; i++) gridarray[i] = new Array(gridx).fill(0);
 	
-	newgrid.appendChild(mapnode_from_array(gridarray, tileset, sprites));
+	//newgrid.appendChild(mapnode_from_array(gridarray, tileset, sprites));
 	
 	
 	let canvas  = document.getElementById("canvas_element");
@@ -277,18 +283,31 @@
 	let height = canvas.offsetHeight;
 	
 	let tile_canvas = document.createElement("canvas");
-	tile_canvas.style.width = "32px";
-	tile_canvas.style.height = "48px";
+	tile_canvas.style.width = "32";
+	tile_canvas.style.height = "48";
 	let tile_context = tile_canvas.getContext("2d");
+	
+	let tileset_canvas = document.getElementById("tileset_element");
+	tileset_canvas.width = 32*tileset.length;
+	tileset_canvas.height = 48;
+	let tileset_context = tileset_canvas.getContext("2d");
 	
 	//let image;
 	function gameInit(){
 		tile_context.fillStyle = "#00F";
 		tile_context.fillRect(0,0,32,48);
-		//image = tile_context.getImageData(0,0,32,48);
+		
+		let len = tileset.length;
+		for(let i = 0;i<len; i++){
+			tileset_context.fillStyle = "#" + (i * (4096/len)).toString(16).padStart(2, '0');
+			console.log((i * (4096/len)).toString(16).padStart(3, '0'));
+			console.log(i*32);
+			tileset_context.fillRect(i*32,0,32,48);
+		}
+
 	}
 	
-	let maxfps = 20;
+	let maxfps = 60;
 	let frame_length = 1000./ maxfps;
 	let last_frame_stamp = 0;
 	let frame_delta = frame_length;
@@ -303,7 +322,7 @@
 		
 		context.fillStyle = "#F00";
 		context.fillRect(0,0,width,height);
-		context.drawImage(tile_canvas, 0,0);
+		context.drawImage(tileset_canvas, 0,0);
 		context.fillStyle = "#000";
 		context.fillRect(32,48,16,16);
 		
