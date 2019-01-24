@@ -1,0 +1,49 @@
+{
+  "name": "unicoderpg",
+  "version": "1.0.0",
+  "description": "Roguelike inspired RPG based on characters found in the unicode specification.  References made to other Rogue-based games, the RPG genre, and the definitions/specifications/components of the internet itself.",
+  "main": "(main.js)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"dev": "SET NODE_ENV=development gulp --require babel-register --gulpfile tasks",
+	"build": "SET NODE_ENV=production gulp build --require babel-register --gulpfile tasks"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "babelrc": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexsaniKY/UnicodeRPG.git"
+  },
+  "keywords": [
+    "unicode",
+    "role",
+    "playing",
+    "rpg",
+    "rogue",
+    "roguelike",
+    "roguelite",
+    "top",
+    "down",
+    "custom",
+    "text"
+  ],
+  "author": "Alexsani",
+  "license": "(undefined)",
+  "bugs": {
+    "url": "https://github.com/AlexsaniKY/UnicodeRPG/issues"
+  },
+  "homepage": "https://github.com/AlexsaniKY/UnicodeRPG#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0",
+    "webpack": "^4.28.4",
+    "webpack-dev-middleware": "^3.5.0",
+    "webpack-hot-middleware": "^2.24.3"
+  }
+}
