@@ -5,8 +5,8 @@
   "main": "(main.js)",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"dev": "SET NODE_ENV=development gulp --require babel-register --gulpfile tasks",
-	"build": "SET NODE_ENV=production gulp build --require babel-register --gulpfile tasks"
+    "dev": " gulp --require babel-register --gulpfile tasks",
+    "build": "SET NODE_ENV=production gulp build --require babel-register --gulpfile tasks"
   },
   "babel": {
     "presets": [
