@@ -1,8 +1,9 @@
 import {tiles} from './tiles';
 import {gameInit} from './lifecycle/game-init';
 import {gameLoop, setContext, setTilesetCanvas} from './lifecycle/game-loop';
+import {Map} from './map/map';
 
-console.log(tiles);
+console.log(new Map(1));
 
 window.addEventListener("keydown", (event) => {
 		//console.log("" + event.key + " " + event.keyIdentifier + " " + event.keyCode);
@@ -32,10 +33,6 @@ window.addEventListener("keydown", (event) => {
 		
 	}, true);
 	
-	
-
-	
-	
 	let tileset = {
 		0: "Grass",
 		1: "Tree",
@@ -53,7 +50,6 @@ window.addEventListener("keydown", (event) => {
 		[1,1,2,1,3,1]
 	];
 	
-	
 	let canvas  = document.getElementById("canvas_element");
 	let context = canvas.getContext("2d");
 	let width = canvas.offsetWidth;
@@ -69,10 +65,6 @@ window.addEventListener("keydown", (event) => {
 	tileset_canvas.height = 48;
 	let tileset_context = tileset_canvas.getContext("2d");
 	
-	
-
-	
-
 	
 gameInit(tiles, tile_context, tileset, tileset_context);
 
