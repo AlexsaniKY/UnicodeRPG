@@ -16,7 +16,22 @@ let config = {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin()
 	],
-    context: path.resolve(__dirname, '../site')
+    context: path.resolve(__dirname, '../site'),
+    module: {
+        rules: [
+            {
+                test:/\.m?js$/,
+                exclude:  /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        babelrc: false
+                    }
+                }
+            }
+        ]
+    }
 }
 
 function scripts() {
