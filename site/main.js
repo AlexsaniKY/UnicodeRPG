@@ -1,7 +1,8 @@
 import {tiles} from './tiles';
+import {gameInit} from './lifecycle/game-init';
+import {gameLoop, setContext, setTilesetCanvas} from './lifecycle/game-loop';
 
-var something = 1;
-console.log(something);
+console.log(tiles);
 
 window.addEventListener("keydown", (event) => {
 		//console.log("" + event.key + " " + event.keyIdentifier + " " + event.keyCode);
@@ -32,81 +33,7 @@ window.addEventListener("keydown", (event) => {
 	}, true);
 	
 	
-	// sprites are defined as objects with:
-	// name,
-	// chars: [{ch , color, offsetX, offsetY}, ]
-	// where each char is a unicode string (generally a single character)
-	// that is assigned a color, and a set of offsets where:
-	// positive x => right
-	// positive y => down
-	let sprites = [
-		{
-			name: "Grass",
-			background:"aquamarine",
-			chars:[{
-					ch: String.fromCodePoint(0x22ce),
-					color: "green",
-					offsetX: .05,
-					offsetY: -.6
-					},
-					{
-					ch: "v",
-					color: "green",
-					offsetX:0.08,
-					offsetY:-.45
-					}
-				]
-		},
-		
-		{
-			name: "Tree",
-			background: "#94a893",
-			chars:[{
-					ch: "i",
-					color: "brown",
-					offsetX: 0,
-					offsetY: -.3
-					},
-					{
-					ch: String.fromCodePoint(0x13dc),
-					color: "green",
-					offsetX: -.2,
-					offsetY: -.8
-					}
-				]
-		},
-		
-		{
-			name: "Dirt",
-			background: "antiquewhite",
-			chars:[{
-					ch: String.fromCodePoint(0x289e),
-					color: "sandybrown",
-					offsetX: .0,
-					offsetY: -.8
-					}
-				]
-		},
-		
-		{
-			name: "Water",
-			background: "#94a8d4",
-			chars:[{
-				ch: String.fromCodePoint(0x2248),
-				color: "blue",
-				offsetX: 0,
-				offsetY: -.3
-				},
-				{
-				ch: String.fromCodePoint(0x2248),
-				color: "blue",
-				offsetX: 0,
-				offsetY: -.8
-				}
-			]
-		}
-		
-	];
+
 	
 	
 	let tileset = {
@@ -142,65 +69,13 @@ window.addEventListener("keydown", (event) => {
 	tileset_canvas.height = 48;
 	let tileset_context = tileset_canvas.getContext("2d");
 	
-	//let image;
-	function gameInit(){
-		tile_context.fillStyle = "#00F";
-		tile_context.fillRect(0,0,32,48);
-		
-		let len = tileset.length;
-		for(let i = 0;i<len; i++){
-			tileset_context.fillStyle = "#" + (i * (4096/len)).toString(16).padStart(2, '0');
-			console.log((i * (4096/len)).toString(16).padStart(3, '0'));
-			console.log(i*32);
-			tileset_context.fillRect(i*32,0,32,48);
-		}
-		
-		let spr;
-		let i = 0;
-		let p = document.createElement("p");
-		tileset_context.font = "36px sans-serif";
-		tileset_context.textAlign = "center";
-		for(let t of tileset){
-			//if (i == 1 )return;
-			for(let s of sprites){
-				if(t == s.name){
-					spr = s;
-				}
-			}
-			tileset_context.fillStyle = spr.background;
-			tileset_context.fillRect(i*32,0,32,48);
-			for(let c of spr.chars){
-				tileset_context.fillStyle = c.color;
-				tileset_context.fillText(c.ch, 16 + ((.2*c.offsetX + i)*32) ,50 + (25*c.offsetY));
-			}
-			i++;
-		}
-		
+	
 
-	}
 	
-	let maxfps = 60;
-	let frame_length = 1000./ maxfps;
-	let last_frame_stamp = 0;
-	let frame_delta = frame_length;
+
 	
-	function gameLoop(timestamp){
-		frame_delta = last_frame_stamp + frame_length;
-		if(timestamp < frame_delta){
-			//console.log(last_frame_stamp + frame_length - timestamp);
-			requestAnimationFrame(gameLoop);
-			return;
-		}
-		last_frame_stamp = timestamp;
-		
-		context.fillStyle = "#F00";
-		context.fillRect(0,0,width,height);
-		context.drawImage(tileset_canvas, 0,0);
-		context.fillStyle = "#000";
-		context.fillRect(32,48,16,16);
-		
-		requestAnimationFrame(gameLoop);
-	}
-	
-gameInit();
+gameInit(tiles, tile_context, tileset, tileset_context);
+
+setContext(context, width, height);
+setTilesetCanvas(tileset_canvas);
 gameLoop(0);
