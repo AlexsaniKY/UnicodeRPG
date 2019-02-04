@@ -3,7 +3,7 @@
 
 
 export function gameInit(tiles, tile_context, tileset, tileset_context) {
-    tile_context.fillStyle = "#00F";
+    tile_context.fillStyle = "#002";
     tile_context.fillRect(0, 0, 32, 48);
 
     let len = tileset.length;
