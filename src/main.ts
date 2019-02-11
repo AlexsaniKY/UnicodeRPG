@@ -34,14 +34,14 @@ window.addEventListener("keydown", (event) => {
 
 }, true);
 
-let tileset = {
-	0: "Grass",
-	1: "Tree",
-	2: "Dirt",
-	3: "Water"
-};
+// let tileset = {
+// 	0: "Grass",
+// 	1: "Tree",
+// 	2: "Dirt",
+// 	3: "Water"
+// };
 
-tileset = ["Grass", "Tree", "Dirt", "Water"];
+let tileset = ["Grass", "Tree", "Dirt", "Water"];
 
 let map = [
 	[1, 1, 1, 1, 1, 1],
@@ -51,7 +51,7 @@ let map = [
 	[1, 1, 2, 1, 3, 1]
 ];
 
-let canvas = document.getElementById("canvas_element");
+let canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("canvas_element");
 let context = canvas.getContext("2d");
 let width = canvas.offsetWidth;
 let height = canvas.offsetHeight;
@@ -61,7 +61,7 @@ tile_canvas.style.width = "32";
 tile_canvas.style.height = "48";
 let tile_context = tile_canvas.getContext("2d");
 
-let tileset_canvas = document.getElementById("tileset_element");
+let tileset_canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("tileset_element");
 tileset_canvas.width = 32 * tileset.length;
 tileset_canvas.height = 48;
 let tileset_context = tileset_canvas.getContext("2d");
@@ -76,6 +76,7 @@ let newmap = new MapCanvas(
 	{width:32, height:48, tiles : tile_canvas}
 	);
 console.log(newmap);
+console.log("main.ts changed");
 
 setContext(context, width, height);
 setTilesetCanvas(tile_canvas);

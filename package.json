@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": " gulp --require babel-register --gulpfile tasks",
-    "build": "gulp build --require babel-register --gulpfile tasks"
+    "build": "gulp build --gulpfile tasks"
   },
   "babel": {
     "presets": [
@@ -40,9 +40,18 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
+    "@babel/preset-typescript": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "browser-sync": "^2.26.3",
+    "browserify": "^16.2.3",
     "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.0",
+    "source-map-loader": "^0.2.4",
+    "tsify": "^4.0.1",
+    "typescript": "^3.3.1",
+    "vinyl-source-stream": "^2.0.0",
     "webpack": "^4.28.4",
     "webpack-dev-middleware": "^3.5.0",
     "webpack-hot-middleware": "^2.24.3"

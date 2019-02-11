@@ -1,7 +1,7 @@
 export class Map {
-    //width;
-    //height;
-    //grid;
+    width:number;
+    height:number;
+    grid;
     constructor({ width, height, default_index = 0 }) {
         this.width = width;
         this.height = height;
