@@ -1,18 +1,18 @@
+import { Tile } from "../tile/tile";
+import { Color } from "../shared/color";
 
 
 
 
-export function gameInit(tiles, tile_context, tileset, tileset_context) {
-    tile_context.fillStyle = "#002";
-    tile_context.fillRect(0, 0, 32, 48);
+export function gameInit(tiles, tile: Tile, tileset, tileset_context) {
+    tile.fill( new Color(0,0,30) );
 
-    let len = tileset.length;
-    for (let i = 0; i < len; i++) {
-        tileset_context.fillStyle = "#" + (i * (4096 / len)).toString(16).padStart(2, '0');
-        console.log((i * (4096 / len)).toString(16).padStart(3, '0'));
-        console.log(i * 32);
-        tileset_context.fillRect(i * 32, 0, 32, 48);
-    }
+    // let len = tileset.length;
+    // for (let i = 0; i < len; i++) {
+    //     tileset_context.fillStyle = "#" + (i * (4096 / len)).toString(16).padStart(2, '0');
+
+    //     tileset_context.fillRect(i * 32, 0, 32, 48);
+    // }
 
     let spr;
     let i = 0;

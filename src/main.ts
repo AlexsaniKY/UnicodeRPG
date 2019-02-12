@@ -3,6 +3,7 @@ import { gameInit } from './lifecycle/game-init';
 import { gameLoop, setContext, setTilesetCanvas } from './lifecycle/game-loop';
 import { Map } from './map/map';
 import {MapCanvas} from './map/map-canvas';
+import { Tile } from './tile/tile';
 
 
 
@@ -56,10 +57,7 @@ let context = canvas.getContext("2d");
 let width = canvas.offsetWidth;
 let height = canvas.offsetHeight;
 
-let tile_canvas = document.createElement("canvas");
-tile_canvas.style.width = "32";
-tile_canvas.style.height = "48";
-let tile_context = tile_canvas.getContext("2d");
+let tile = new Tile(32, 48);
 
 let tileset_canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("tileset_element");
 tileset_canvas.width = 32 * tileset.length;
@@ -67,19 +65,19 @@ tileset_canvas.height = 48;
 let tileset_context = tileset_canvas.getContext("2d");
 
 
-gameInit(tiles, tile_context, tileset, tileset_context);
+gameInit(tiles, tile, tileset, tileset_context);
 
 let newmap = new MapCanvas(
 	new Map({ 
 			width: 5, height: 5, default_index: 1 
 		}),
-	{width:32, height:48, tiles : tile_canvas}
+	{width:32, height:48, tiles : tile.canvas}
 	);
 console.log(newmap);
 console.log("main.ts changed");
 
 setContext(context, width, height);
-setTilesetCanvas(tile_canvas);
+setTilesetCanvas(tileset_canvas);
 
 document.getElementById("new-grid-div").appendChild(newmap._canvas);
 
