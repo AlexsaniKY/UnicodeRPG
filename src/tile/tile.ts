@@ -9,7 +9,7 @@ export class Tile extends Sprite {
     }
 
     drawTextSprite(sprite: TextSprite) {
-        this.context.font = "36px sans-serif";
+        this.context.font = `${this.width}px sans-serif`;
         this.context.textAlign = "center";
         //TODO: CONVERT TO UNIVERSAL COLOR USAGE
         this.context.fillStyle = <string>sprite.background;
@@ -17,7 +17,7 @@ export class Tile extends Sprite {
         this.context.fillRect(0, 0, this.width, this.height);
         for(let c of sprite.chars){
             this.context.fillStyle = <string> c.color;
-            this.context.fillText(c.ch, this.width/2 + ((.2 * c.offsetX) * 32), this.height + 2 + (25 * c.offsetY))
+            this.context.fillText(c.ch, this.width/2 + ((.2 * c.offsetX) * this.width), this.height + 2 + ((this.height/2) * c.offsetY))
         }
     }
 

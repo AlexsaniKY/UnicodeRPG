@@ -16,7 +16,7 @@ export function gameInit(tiles:TextSprite[], tile: Tile, __tileset: string[], ti
             }
         }
         tile.drawTextSprite(spr);
-        tile.draw(tileset, i*32, 0);
+        tile.draw(tileset, i*tile.width, 0);
 
         i++;
     }
