@@ -1,39 +1,23 @@
 import { Tile } from "../tile/tile";
 import { Color } from "../shared/color";
+import { TextSprite } from "../textsprite";
+import { Tileset } from "../tile/tileset";
 
-
-
-
-export function gameInit(tiles, tile: Tile, tileset, tileset_context) {
+export function gameInit(tiles:TextSprite[], tile: Tile, __tileset: string[], tileset: Tileset) {
     tile.fill( new Color(0,0,30) );
-
-    // let len = tileset.length;
-    // for (let i = 0; i < len; i++) {
-    //     tileset_context.fillStyle = "#" + (i * (4096 / len)).toString(16).padStart(2, '0');
-
-    //     tileset_context.fillRect(i * 32, 0, 32, 48);
-    // }
 
     let spr;
     let i = 0;
-    let p = document.createElement("p");
-    tileset_context.font = "36px sans-serif";
-    tileset_context.textAlign = "center";
-    for (let t of tileset) {
-        //if (i == 1 )return;
+
+    for (let t of __tileset) {
         for (let s of tiles) {
             if (t == s.name) {
                 spr = s;
             }
         }
-        tileset_context.fillStyle = spr.background;
-        tileset_context.fillRect(i * 32, 0, 32, 48);
-        for (let c of spr.chars) {
-            tileset_context.fillStyle = c.color;
-            tileset_context.fillText(c.ch, 16 + ((.2 * c.offsetX + i) * 32), 50 + (25 * c.offsetY));
-        }
+        tile.drawTextSprite(spr);
+        tile.draw(tileset, i*32, 0);
+
         i++;
     }
-
-
 }

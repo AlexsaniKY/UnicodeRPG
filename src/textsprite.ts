@@ -1,3 +1,5 @@
+import { Color } from "./shared/color";
+
 // sprites are defined as objects with:
 // name,
 // chars: [{ch , color, offsetX, offsetY}, ]
@@ -5,7 +7,21 @@
 // that is assigned a color, and a set of offsets where:
 // positive x => right
 // positive y => down
-export let tiles = [
+
+export interface TextSpritePart{
+	ch: string,
+	color: Color | string,
+	offsetX: number,
+	offsetY: number
+}
+
+export interface TextSprite{
+	name: string,
+	background: Color | string,
+	chars: TextSpritePart[]
+}
+
+export let tiles: TextSprite[] = [
 	{
 		name: "Grass",
 		background: "aquamarine",

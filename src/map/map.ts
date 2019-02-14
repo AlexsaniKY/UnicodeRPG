@@ -15,4 +15,11 @@ export class Map {
             this.grid.push(row);
         }
     }
+    static fromIndices(indexmap: number[][]): Map{
+        return {
+            width: indexmap[0].length,
+            height: indexmap.length,
+            grid: indexmap
+        };
+    }
 }

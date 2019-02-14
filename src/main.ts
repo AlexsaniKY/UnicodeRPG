@@ -1,9 +1,10 @@
-import { tiles } from './tiles';
+import { tiles } from './textsprite';
 import { gameInit } from './lifecycle/game-init';
 import { gameLoop, setContext, setTilesetCanvas } from './lifecycle/game-loop';
 import { Map } from './map/map';
 import {MapCanvas} from './map/map-canvas';
 import { Tile } from './tile/tile';
+import { Tileset } from './tile/tileset';
 
 
 
@@ -35,14 +36,8 @@ window.addEventListener("keydown", (event) => {
 
 }, true);
 
-// let tileset = {
-// 	0: "Grass",
-// 	1: "Tree",
-// 	2: "Dirt",
-// 	3: "Water"
-// };
 
-let tileset = ["Grass", "Tree", "Dirt", "Water"];
+let __tileset = ["Grass", "Tree", "Dirt", "Water"];
 
 let map = [
 	[1, 1, 1, 1, 1, 1],
@@ -59,26 +54,23 @@ let height = canvas.offsetHeight;
 
 let tile = new Tile(32, 48);
 
-let tileset_canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("tileset_element");
-tileset_canvas.width = 32 * tileset.length;
-tileset_canvas.height = 48;
-let tileset_context = tileset_canvas.getContext("2d");
+let tileset: Tileset = new Tileset(__tileset.length, 32, 48);
 
 
-gameInit(tiles, tile, tileset, tileset_context);
+gameInit(tiles, tile, __tileset, tileset);
 
 let newmap = new MapCanvas(
-	new Map({ 
-			width: 5, height: 5, default_index: 1 
-		}),
-	{width:32, height:48, tiles : tile.canvas}
+	Map.fromIndices(map),
+	tileset
 	);
 console.log(newmap);
-console.log("main.ts changed");
+
 
 setContext(context, width, height);
-setTilesetCanvas(tileset_canvas);
+setTilesetCanvas(tileset.canvas);
 
-document.getElementById("new-grid-div").appendChild(newmap._canvas);
+document.getElementById("new-grid-div").appendChild(newmap.canvas);
+document.getElementById("new-grid-div").appendChild(tileset.canvas);
+document.getElementById("new-grid-div").appendChild(tile.canvas);
 
 gameLoop(0);
