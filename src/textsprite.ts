@@ -1,4 +1,5 @@
 import { Color } from "./shared/color";
+import {Dictionary} from "typescript-collections";
 
 // sprites are defined as objects with:
 // name,
@@ -15,11 +16,13 @@ export interface TextSpritePart{
 	offsetY: number
 }
 
-export interface TextSprite{
-	name: string,
-	background: Color | string,
-	chars: TextSpritePart[]
+export class TextSprite{
+	name: string;
+	background: Color | string;
+	chars: TextSpritePart[];
 }
+
+
 
 export let tiles: TextSprite[] = [
 	{
@@ -89,3 +92,8 @@ export let tiles: TextSprite[] = [
 	}
 
 ];
+
+export let TileSpriteDict = new Dictionary<string, TextSprite>();
+for(let spr of tiles){
+	TileSpriteDict.setValue(spr.name, spr);
+}

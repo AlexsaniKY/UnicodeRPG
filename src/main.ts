@@ -39,36 +39,37 @@ window.addEventListener("keydown", (event) => {
 
 let __tileset = ["Grass", "Tree", "Dirt", "Water"];
 
-// let map = [
-// 	[1, 1, 1, 1, 1, 1],
-// 	[1, 0, 0, 2, 3, 1],
-// 	[1, 0, 2, 2, 3, 1],
-// 	[1, 0, 2, 0, 3, 1],
-// 	[1, 1, 2, 1, 3, 1]
-// ];
+let map = [
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+	[1, 1, 2, 2, 1, 1, 0, 2, 1, 1],
+	[1, 0, 0, 2, 0, 0, 0, 2, 3, 1],
+	[1, 0, 2, 2, 0, 0, 3, 2, 2, 1],
+	[1, 0, 2, 0, 0, 0, 0, 2, 3, 1],
+	[1, 1, 2, 0, 0, 1, 0, 2, 3, 1],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+];
 
-let map = [];
-for(let j=0; j < 100; j++){
-	let row = [];
-	for(let i=0; i < 100; i++)
-		row.push((i+j)%__tileset.length);
-	map.push(row);
-}
+// let map = [];
+// for(let j=0; j < 100; j++){
+// 	let row = [];
+// 	for(let i=0; i < 100; i++)
+// 		row.push((i+j)%__tileset.length);
+// 	map.push(row);
+// }
 
 let canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("canvas_element");
 let context = canvas.getContext("2d");
 let width = canvas.offsetWidth;
 let height = canvas.offsetHeight;
 
-let tilewidth = 32/8;
-let tileheight = 48/8;
+let tilewidth = 32/2;
+let tileheight = 48/2;
 
 let tile = new Tile(tilewidth, tileheight);
 
-let tileset: Tileset = new Tileset(__tileset.length, tilewidth, tileheight);
+let tileset: Tileset = Tileset.fromKeys(__tileset, tilewidth, tileheight);
 
-
-gameInit(tiles, tile, __tileset, tileset);
+gameInit(tileset);
 
 let newmap = new MapCanvas(
 	Map.fromIndices(map),

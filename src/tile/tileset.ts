@@ -2,27 +2,55 @@ import { IDrawable } from "../shared/drawable";
 import { Color } from "../shared/color";
 import { Sprite } from "../sprite";
 
+import{TileSpriteDict, TextSprite} from "../textsprite";
+import { Tile } from "./tile";
+
 export class Tileset extends Sprite{
-    tilewidth:number;
-    tileheight:number;
-    constructor(num_tiles:number, tilewidth:number, tileheight:number){
+    tileWidth:number;
+    tileHeight:number;
+    tileKeys:string[];
+    constructor(num_tiles:number, tilewidth:number, tileheight:number, tilekeys?:string[]){
         super(tilewidth * num_tiles, tileheight);
-        this.tilewidth = tilewidth;
-        this.tileheight = tileheight;
+        this.tileWidth = tilewidth;
+        this.tileHeight = tileheight;
+        if(tilekeys) this.tileKeys = tilekeys;
     }
+
+    prepareTiles(){
+        if(this.tileKeys){
+            let name:string;
+            let sprite: TextSprite;
+            let tile: Tile = new Tile(this.tileWidth, this.tileHeight);
+
+            for(let i=0; i<this.tileKeys.length; i++){
+                name = this.tileKeys[i];
+                sprite = TileSpriteDict.getValue(name);
+                tile.drawTextSprite(sprite);
+
+                tile.draw(this, i*this.tileWidth, 0);
+            }
+        }
+    }
+
+    static fromKeys(tilekeys: string[], tilewidth:number, tileheight:number): Tileset{
+        let newtileset = new Tileset(tilekeys.length, tilewidth, tileheight);
+        newtileset.tileKeys = tilekeys;
+        return newtileset;
+    }
+
     drawTile(target:IDrawable, index:number, x, y){
         this.draw(
             target, 
             x, 
             y, 
             {
-                scalewidth: this.tilewidth, 
+                scalewidth: this.tileWidth, 
                 scaleheight: this.height
             },{
-                x: index*this.tilewidth,
+                x: index*this.tileWidth,
                 y: 0,
-                clipwidth: this.tilewidth,
-                clipheight: this.tileheight
+                clipwidth: this.tileWidth,
+                clipheight: this.tileHeight
             })
     }
 }

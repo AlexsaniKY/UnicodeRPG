@@ -18,12 +18,12 @@ export function setTilesetCanvas(canvas){
 }
 
 export function gameLoop(timestamp) {
-    frame_delta = last_frame_stamp + frame_length;
-    if (timestamp < frame_delta) {
-        //console.log(last_frame_stamp + frame_length - timestamp);
-        requestAnimationFrame(gameLoop);
-        return;
-    }
+    frame_delta = timestamp - last_frame_stamp;
+    // if (timestamp < frame_delta) {
+    //     //console.log(last_frame_stamp + frame_length - timestamp);
+    //     requestAnimationFrame(gameLoop);
+    //     return;
+    // }
     last_frame_stamp = timestamp;
 
     _context.fillStyle = "#F00";

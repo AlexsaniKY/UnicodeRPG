@@ -3,6 +3,7 @@
         "src/main.ts"
     ],
     "compilerOptions": {
+        "moduleResolution":"node",
         //"module": "none",
         //"noImplicitAny": true,
         "removeComments": true,
