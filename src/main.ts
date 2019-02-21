@@ -1,10 +1,11 @@
 import { tiles } from './textsprite';
 import { gameInit } from './lifecycle/game-init';
-import { gameLoop, setContext, setTilesetCanvas } from './lifecycle/game-loop';
+import { gameLoop, setTileset } from './lifecycle/game-loop';
 import { Map } from './map/map';
 import {MapCanvas} from './map/map-canvas';
 import { Tile } from './tile/tile';
 import { Tileset } from './tile/tileset';
+import { Globals } from './globals';
 
 
 
@@ -57,13 +58,10 @@ let map = [
 // 	map.push(row);
 // }
 
-let canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("canvas_element");
-let context = canvas.getContext("2d");
-let width = canvas.offsetWidth;
-let height = canvas.offsetHeight;
+let scale = .5;
 
-let tilewidth = 32/2;
-let tileheight = 48/2;
+let tilewidth = 32 * scale;
+let tileheight = 48 * scale;
 
 let tile = new Tile(tilewidth, tileheight);
 
@@ -78,12 +76,12 @@ let newmap = new MapCanvas(
 	);
 console.log(newmap);
 
-
-setContext(context, width, height);
-setTilesetCanvas(tileset.canvas);
+setTileset(tileset);
 
 document.getElementById("new-grid-div").appendChild(newmap.canvas);
 document.getElementById("new-grid-div").appendChild(tileset.canvas);
 document.getElementById("new-grid-div").appendChild(tile.canvas);
+document.getElementById("new-grid-div").appendChild(Globals.screen.canvas);
+
 
 gameLoop(0);

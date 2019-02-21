@@ -49,4 +49,13 @@ export class Sprite implements IDrawable{
         this.context.fillRect(0,0,this.width, this.height);
     }
 
+    fillRect(color: Color, x, y, width, height){
+        this.context.fillStyle = color.toString();
+        this.context.fillRect(x, y, width, height);
+    }
+
+    clear(x:number = 0, y:number = 0, width:number = 0, height:number = 0){
+        this.context.clearRect(x, y, width, height);
+    }
+
 }
