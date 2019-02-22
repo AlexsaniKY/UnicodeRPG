@@ -3,7 +3,7 @@ import { Color } from "../shared/color";
 import { Sprite } from "../sprite";
 
 import{TileSpriteDict, TextSprite} from "../textsprite";
-import { Tile } from "./tile";
+import { Tile, OffsetTile } from "./tile";
 
 export class Tileset extends Sprite{
     tileWidth:number;
@@ -16,18 +16,17 @@ export class Tileset extends Sprite{
         if(tilekeys) this.tileKeys = tilekeys;
     }
 
-    prepareTiles(){
+    prepareTiles(tile: Tile = new Tile(this.tileWidth, this.tileHeight)){
         if(this.tileKeys){
             let name:string;
             let sprite: TextSprite;
-            let tile: Tile = new Tile(this.tileWidth, this.tileHeight);
 
             for(let i=0; i<this.tileKeys.length; i++){
                 name = this.tileKeys[i];
                 sprite = TileSpriteDict.getValue(name);
                 tile.drawTextSprite(sprite);
 
-                tile.draw(this, i*this.tileWidth, 0);
+                tile.drawNoOffset(this, i*this.tileWidth, 0);
             }
         }
     }

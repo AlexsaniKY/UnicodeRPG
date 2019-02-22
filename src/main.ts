@@ -3,7 +3,7 @@ import { gameInit } from './lifecycle/game-init';
 import { gameLoop, setTileset } from './lifecycle/game-loop';
 import { Map } from './map/map';
 import {MapCanvas} from './map/map-canvas';
-import { Tile } from './tile/tile';
+import { Tile, OffsetTile } from './tile/tile';
 import { Tileset } from './tile/tileset';
 import { Globals } from './globals';
 
@@ -63,7 +63,7 @@ let scale = .5;
 let tilewidth = 32 * scale;
 let tileheight = 48 * scale;
 
-let tile = new Tile(tilewidth, tileheight);
+//let tile = new OffsetTile(tilewidth, tileheight, );
 
 let tileset: Tileset = Tileset.fromKeys(__tileset, tilewidth, tileheight);
 
@@ -80,7 +80,7 @@ setTileset(tileset);
 
 document.getElementById("new-grid-div").appendChild(newmap.canvas);
 document.getElementById("new-grid-div").appendChild(tileset.canvas);
-document.getElementById("new-grid-div").appendChild(tile.canvas);
+//document.getElementById("new-grid-div").appendChild(tile.canvas);
 document.getElementById("new-grid-div").appendChild(Globals.screen.canvas);
 
 
