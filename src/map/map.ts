@@ -1,25 +1,19 @@
+import { IndexMap } from "./index-map";
+
 export class Map {
     width:number;
     height:number;
-    grid;
-    constructor( width:number, height:number, default_index = 0 ) {
+    grid: IndexMap;
+    constructor( width:number, height:number, default_index?: number) {
         this.width = width;
         this.height = height;
-        this.grid = []
-        let row;
-        for (let y = 0; y < height; y++) {
-            row = [];
-            for (let x = 0; x < width; x++) {
-                row.push(default_index);
-            }
-            this.grid.push(row);
-        }
+        this.grid = new IndexMap(width, height, default_index);
     }
-    static fromIndices(indexmap: number[][]): Map{
+    static fromIndices(indexArrArr: number[][]): Map{
         return {
-            width: indexmap[0].length,
-            height: indexmap.length,
-            grid: indexmap
+            width: indexArrArr[0].length,
+            height: indexArrArr.length,
+            grid: IndexMap.fromArrayArray(indexArrArr)
         };
     }
 }
