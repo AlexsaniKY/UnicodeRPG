@@ -3,7 +3,7 @@ import { gameInit } from './lifecycle/game-init';
 import { gameLoop, setTileset } from './lifecycle/game-loop';
 import { Map } from './map/map';
 import {MapCanvas} from './map/map-canvas';
-import { Tile, OffsetTile } from './tile/tile';
+import { Tile, OverlapTile } from './tile/tile';
 import { Tileset } from './tile/tileset';
 import { Globals } from './globals';
 
@@ -38,7 +38,7 @@ window.addEventListener("keydown", (event) => {
 }, true);
 
 
-let __tileset = ["Grass", "Tree", "Dirt", "Water"];
+let tilekeys = ["Grass", "Tree", "Dirt", "Water"];
 
 let map = [
 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -58,14 +58,14 @@ let map = [
 // 	map.push(row);
 // }
 
-let scale = .5;
+let scale = .25;
 
 let tilewidth = 32 * scale;
 let tileheight = 48 * scale;
 
 //let tile = new OffsetTile(tilewidth, tileheight, );
 
-let tileset: Tileset = Tileset.fromKeys(__tileset, tilewidth, tileheight);
+let tileset: Tileset = new Tileset(tilekeys.length, new OverlapTile(tilewidth, tileheight, 0, tileheight* (1/3)),tilekeys);// .fromKeys(__tileset, tilewidth, tileheight);
 
 gameInit(tileset);
 

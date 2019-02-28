@@ -3,20 +3,29 @@ import { Color } from "../shared/color";
 import { Sprite } from "../sprite";
 
 import{TileSpriteDict, TextSprite} from "../textsprite";
-import { Tile, OffsetTile } from "./tile";
+import { Tile, OverlapTile } from "./tile";
 
 export class Tileset extends Sprite{
     tileWidth:number;
     tileHeight:number;
+    trueTileWidth:number;
+    trueTileHeight:number;
     tileKeys:string[];
-    constructor(num_tiles:number, tilewidth:number, tileheight:number, tilekeys?:string[]){
-        super(tilewidth * num_tiles, tileheight);
-        this.tileWidth = tilewidth;
-        this.tileHeight = tileheight;
+    tile:Tile;
+    constructor(num_tiles:number, tile:Tile, tilekeys?:string[]){
+        super(tile.trueWidth * num_tiles, tile.trueHeight);
+        this.tile = tile;
+        this.tileWidth = tile.baseWidth;
+        this.trueTileWidth = tile.trueWidth;
+
+        this.tileHeight = tile.baseHeight;
+        this.trueTileHeight = tile.trueHeight;
+        
         if(tilekeys) this.tileKeys = tilekeys;
     }
 
-    prepareTiles(tile: Tile = new Tile(this.tileWidth, this.tileHeight)){
+    //TODO: rely on internal tile from constructor
+    prepareTiles(){//tile: Tile = new Tile(this.tileWidth, this.tileHeight)){
         if(this.tileKeys){
             let name:string;
             let sprite: TextSprite;
@@ -24,15 +33,16 @@ export class Tileset extends Sprite{
             for(let i=0; i<this.tileKeys.length; i++){
                 name = this.tileKeys[i];
                 sprite = TileSpriteDict.getValue(name);
-                tile.drawTextSprite(sprite);
+                this.tile.drawTextSprite(sprite);
 
-                tile.drawNoOffset(this, i*this.tileWidth, 0);
+                this.tile.drawNoOffset(this, i*this.tileWidth, 0);
             }
         }
     }
 
+    //TODO: how to handle this case with OverlayTiles?
     static fromKeys(tilekeys: string[], tilewidth:number, tileheight:number): Tileset{
-        let newtileset = new Tileset(tilekeys.length, tilewidth, tileheight);
+        let newtileset = new Tileset(tilekeys.length, new Tile(tilewidth, tileheight));
         newtileset.tileKeys = tilekeys;
         return newtileset;
     }
@@ -41,15 +51,15 @@ export class Tileset extends Sprite{
         this.draw(
             target, 
             x, 
-            y, 
+            y -( "originOffsetY" in this.tile? this.tile["originOffsetY"] : 0),// - 8, 
             {
-                scalewidth: this.tileWidth, 
-                scaleheight: this.height
+                scalewidth: this.trueTileWidth, 
+                scaleheight: this.trueTileHeight
             },{
-                x: index*this.tileWidth,
+                x: index*this.trueTileWidth,
                 y: 0,
-                clipwidth: this.tileWidth,
-                clipheight: this.tileHeight
+                clipwidth: this.trueTileWidth,
+                clipheight: this.trueTileHeight
             })
     }
 }

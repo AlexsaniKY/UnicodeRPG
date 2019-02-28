@@ -4,9 +4,15 @@ import { TextSprite } from "../textsprite";
 import { IDrawable, IDrawScaleOptions, IDrawSourceOptions } from "../shared/drawable";
 
 export class Tile extends Sprite {
-
+    trueWidth:number;
+    trueHeight:number;
+    baseWidth:number;
+    baseHeight:number;
     constructor(x: number, y: number) {
         super(x, y);
+        this.trueWidth = this.baseWidth = x;
+        this.trueHeight = this.baseHeight = y;
+
     }
 
     fillBase(){
@@ -18,7 +24,7 @@ export class Tile extends Sprite {
         this.context.textAlign = "center";
         
         //this.context.fillStyle = "rgba(0,0,0,0)";
-        this.context.clearRect(0,0,this.width, this.height);
+        this.context.clearRect(0,0,this.trueWidth, this.trueHeight);
 
         //TODO: CONVERT TO UNIVERSAL COLOR USAGE
         this.context.fillStyle = <string>sprite.background;
@@ -36,18 +42,20 @@ export class Tile extends Sprite {
     }
 }
 
-export class OffsetTile extends Tile{
+export class OverlapTile extends Tile{
     originOffsetX:number = 0;
     originOffsetY:number = 0;
 
-    constructor(x: number, y:number, offsetX: number, offsetY:number){
+    constructor(x: number, y:number, offsetX: number, offsetY:number, baseHeight?:number, baseWidth?:number){
         super(x,y);
         this.originOffsetX = offsetX;
         this.originOffsetY = offsetY;
+        this.baseHeight = baseHeight? baseHeight : y - offsetY;
+        this.baseWidth = baseWidth ? baseWidth : x - offsetX;
     }
 
     fillBase(){
-        this.context.fillRect(this.originOffsetX, this.originOffsetY, this.width, this.height);
+        this.context.fillRect(this.originOffsetX, this.originOffsetY, this.baseWidth, this.baseHeight);
     }
 
     draw(target: IDrawable, x:number, y:number, scale_options?:IDrawScaleOptions, from_options?:IDrawSourceOptions){
