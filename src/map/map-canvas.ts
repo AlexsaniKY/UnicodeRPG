@@ -14,9 +14,14 @@ export class MapCanvas extends Sprite{
         let tile_h = tileset.tileHeight;// * (2/3);//TODO fix this hardcode
         for (let row = 0; row < map.height; row++) {
             for (let col = 0; col < map.width; col++) {
-                tileset.drawTile(this, map.grid.at(col, row), tile_w * col, tile_h * row)
+                this.drawTile(tileset, col, row);
+                //tileset.drawTile(this, map.grid.at(col, row), tile_w * col, tile_h * row)
             }
         }
+    }
+
+    drawTile(tileset: Tileset, x:number, y:number){
+        tileset.drawTile(this, this.map.grid.at(x, y), tileset.tileWidth * x, tileset.tileHeight * y);
     }
 
 }

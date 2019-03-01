@@ -6,6 +6,8 @@ import {MapCanvas} from './map/map-canvas';
 import { Tile, OverlapTile } from './tile/tile';
 import { Tileset } from './tile/tileset';
 import { Globals } from './globals';
+import { Walker } from './map/generation/walker';
+import { wrap } from './shared/numbers';
 
 
 
@@ -37,28 +39,34 @@ window.addEventListener("keydown", (event) => {
 
 }, true);
 
+//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+async function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 
 let tilekeys = ["Grass", "Tree", "Dirt", "Water"];
 
-let map = [
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-	[1, 1, 2, 2, 1, 1, 0, 2, 1, 1],
-	[1, 0, 0, 2, 0, 0, 0, 2, 3, 1],
-	[1, 0, 2, 2, 0, 0, 3, 2, 2, 1],
-	[1, 0, 2, 0, 0, 0, 0, 2, 3, 1],
-	[1, 1, 2, 0, 0, 1, 0, 2, 3, 1],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-];
+// let map = [
+// 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+// 	[1, 1, 2, 2, 1, 1, 0, 2, 1, 1],
+// 	[1, 0, 0, 2, 0, 0, 0, 2, 3, 1],
+// 	[1, 0, 2, 2, 0, 0, 3, 2, 2, 1],
+// 	[1, 0, 2, 0, 0, 0, 0, 2, 3, 1],
+// 	[1, 1, 2, 0, 0, 1, 0, 2, 3, 1],
+// 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+// ];
 
-// let map = [];
-// for(let j=0; j < 100; j++){
-// 	let row = [];
-// 	for(let i=0; i < 100; i++)
-// 		row.push((i+j)%__tileset.length);
-// 	map.push(row);
-// }
+let map = [];
+for(let j=0; j < 100; j++){
+	let row = [];
+	for(let i=0; i < 100; i++)
+		row.push(1);
+	map.push(row);
+}
 
-let scale = .25;
+
+let scale = 4/32;
 
 let tilewidth = 32 * scale;
 let tileheight = 48 * scale;
@@ -76,9 +84,24 @@ let newmap = new MapCanvas(
 	);
 console.log(newmap);
 
+document.getElementById("new-grid-div").appendChild(newmap.canvas);
+
+let walk = new Walker(Math.floor(map[0].length/2), Math.floor(map.length/2));
+async function walking(){
+	for(let i = 0; i<2000; i++){
+		//console.log(walk.x, ",", walk.y);
+		walk.randomWander(.7);
+		walk.x = wrap(walk.x, newmap.map.grid.width);
+		walk.y = wrap(walk.y, newmap.map.grid.height);
+		newmap.map.grid.set(walk.x, walk.y, 2);
+		newmap.drawTile(tileset, walk.x, walk.y);
+		if(!(i%6))await sleep(1);
+	}
+} walking();
+
 setTileset(tileset);
 
-document.getElementById("new-grid-div").appendChild(newmap.canvas);
+// document.getElementById("new-grid-div").appendChild(newmap.canvas);
 document.getElementById("new-grid-div").appendChild(tileset.canvas);
 //document.getElementById("new-grid-div").appendChild(tile.canvas);
 document.getElementById("new-grid-div").appendChild(Globals.screen.canvas);
