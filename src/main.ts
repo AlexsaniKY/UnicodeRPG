@@ -6,8 +6,9 @@ import {MapCanvas} from './map/map-canvas';
 import { Tile, OverlapTile } from './tile/tile';
 import { Tileset } from './tile/tileset';
 import { Globals } from './globals';
-import { Walker } from './map/generation/walker';
-import { wrap } from './shared/numbers';
+import { Walker, EightWayDir, FourWayDir } from './map/generation/walker';
+import { wrap, randInt } from './shared/numbers';
+import { IndexMap } from './map/index-map';
 
 
 
@@ -58,9 +59,9 @@ let tilekeys = ["Grass", "Tree", "Dirt", "Water"];
 // ];
 
 let map = [];
-for(let j=0; j < 100; j++){
+for(let j=0; j < 200; j++){
 	let row = [];
-	for(let i=0; i < 100; i++)
+	for(let i=0; i < 200; i++)
 		row.push(1);
 	map.push(row);
 }
@@ -86,18 +87,29 @@ console.log(newmap);
 
 document.getElementById("new-grid-div").appendChild(newmap.canvas);
 
-let walk = new Walker(Math.floor(map[0].length/2), Math.floor(map.length/2));
+
+let walker_steps = randInt(500, 3000);
+let walker_stray = Math.pow(Math.random(), .2);
+let walk = new Walker(Math.floor(map[0].length/2), Math.floor(map.length/2), FourWayDir);
 async function walking(){
-	for(let i = 0; i<2000; i++){
+	for(let i = 0; i<walker_steps; i++){
 		//console.log(walk.x, ",", walk.y);
-		walk.randomWander(.7);
+		walk.randomWander(walker_stray);
 		walk.x = wrap(walk.x, newmap.map.grid.width);
 		walk.y = wrap(walk.y, newmap.map.grid.height);
 		newmap.map.grid.set(walk.x, walk.y, 2);
 		newmap.drawTile(tileset, walk.x, walk.y);
 		if(!(i%6))await sleep(1);
 	}
+	newmap.map.grid.dilate(2, 1);
+	newmap.map.grid.dilate(1, 1);
+	newmap.redraw();
 } walking();
+
+let dilate_test = new IndexMap(5,5);
+dilate_test.set(2,2, 1);
+console.log(dilate_test.dilate(1, 3));
+console.log(dilate_test);
 
 setTileset(tileset);
 

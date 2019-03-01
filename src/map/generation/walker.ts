@@ -37,14 +37,14 @@ let Directions: Direction[] = [
     new Direction( 1,-1), //down right
 ];
 
-let FourWayDir: DIR[] = [
+export let FourWayDir: DIR[] = [
     DIR.RIGHT,
     DIR.UP,
     DIR.LEFT,
     DIR.DOWN
 ]
 
-let EightWayDir: DIR[] = [
+export let EightWayDir: DIR[] = [
     DIR.RIGHT,
     DIR.UP_RIGHT,
     DIR.UP,

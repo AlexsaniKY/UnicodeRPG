@@ -10,11 +10,20 @@ export class MapCanvas extends Sprite{
         this.map = map;
         this.tileset = tileset;
 
-        let tile_w = tileset.tileWidth; 
-        let tile_h = tileset.tileHeight;// * (2/3);//TODO fix this hardcode
+        // let tile_w = tileset.tileWidth; 
+        // let tile_h = tileset.tileHeight;// * (2/3);//TODO fix this hardcode
         for (let row = 0; row < map.height; row++) {
             for (let col = 0; col < map.width; col++) {
                 this.drawTile(tileset, col, row);
+                //tileset.drawTile(this, map.grid.at(col, row), tile_w * col, tile_h * row)
+            }
+        }
+    }
+
+    redraw(){
+        for (let row = 0; row < this.map.height; row++) {
+            for (let col = 0; col < this.map.width; col++) {
+                this.drawTile(this.tileset, col, row);
                 //tileset.drawTile(this, map.grid.at(col, row), tile_w * col, tile_h * row)
             }
         }
