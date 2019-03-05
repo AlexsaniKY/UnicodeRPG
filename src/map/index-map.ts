@@ -30,6 +30,13 @@ export class IndexMap {
         for (let i of this.grid) i.fill(val);
     }
 
+    // TODO: EXTEND TO MORE TYPES OF RANDOMNESS
+    fillRandom(chance:number){
+        for(let row of this.grid)
+            for(let col = 0; col<row.length; col++)
+                row[col] = Math.random() < chance ? 0 : 1;
+    }
+
     static fromArrayArray(arr: number[][]): IndexMap {
         var returnMap: IndexMap = new IndexMap(0, 0);
         let width = arr[0].length;
