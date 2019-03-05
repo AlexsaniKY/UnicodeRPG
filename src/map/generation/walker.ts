@@ -1,11 +1,11 @@
 import {randInt, randBool, wrap} from "../../shared/numbers";
 
-interface IPositional{
+export interface IPositional{
     x:number;
     y:number;
 }
 
-class Direction implements IPositional{
+export class Direction implements IPositional{
     x:number;
     y:number;
     constructor(x:number, y:number){
@@ -26,7 +26,7 @@ export const enum DIR{
     DOWN_RIGHT
 }
 
-let Directions: Direction[] = [
+export let Directions: Direction[] = [
     new Direction( 1, 0), //right
     new Direction( 1, 1), //up right
     new Direction( 0, 1), //up
@@ -37,32 +37,83 @@ let Directions: Direction[] = [
     new Direction( 1,-1), //down right
 ];
 
-export let FourWayDir: DIR[] = [
-    DIR.RIGHT,
-    DIR.UP,
-    DIR.LEFT,
-    DIR.DOWN
+export let FourWayDir: DIR[][] = [
+    [DIR.RIGHT],
+    [DIR.UP],
+    [DIR.LEFT],
+    [DIR.DOWN]
+];
+
+export let EightWayDir: DIR[][] = [
+    [DIR.RIGHT],
+    [DIR.UP_RIGHT],
+    [DIR.UP],
+    [DIR.UP_LEFT],
+    [DIR.LEFT],
+    [DIR.DOWN_LEFT],
+    [DIR.DOWN],
+    [DIR.DOWN_RIGHT]
+];
+
+export let SixteenWayDir: DIR[][] = [
+    [DIR.RIGHT, DIR.RIGHT],
+
+    [DIR.UP_RIGHT,  DIR.RIGHT],
+    //[DIR.RIGHT, DIR.UP_RIGHT], 
+
+    [DIR.UP_RIGHT, DIR.UP_RIGHT],
+
+    [DIR.UP, DIR.UP_RIGHT],
+    //[DIR.UP_RIGHT, DIR.UP],
+
+    [DIR.UP, DIR.UP],
+
+    [DIR.UP_LEFT, DIR.UP],
+    //[DIR.UP, DIR.UP_LEFT], 
+
+    [DIR.UP_LEFT, DIR.UP_LEFT],
+
+    [DIR.LEFT, DIR.UP_LEFT],
+    //[DIR.UP_LEFT, DIR.LEFT], 
+
+    [DIR.LEFT, DIR.LEFT],
+
+    [DIR.DOWN_LEFT, DIR.LEFT],
+    //[DIR.LEFT, DIR.DOWN_LEFT], 
+
+    [DIR.DOWN_LEFT, DIR.DOWN_LEFT],
+
+    [DIR.DOWN, DIR.DOWN_LEFT],
+    //[DIR.DOWN_LEFT, DIR.DOWN], 
+
+    [DIR.DOWN, DIR.DOWN],
+
+    [DIR.DOWN_RIGHT, DIR.DOWN],
+    // [DIR.DOWN, DIR.DOWN_RIGHT],
+
+    [DIR.DOWN_RIGHT, DIR.DOWN_RIGHT],
+
+    [DIR.RIGHT, DIR.DOWN_RIGHT],
+    // [DIR.DOWN_RIGHT, DIR.RIGHT],
+
 ]
 
-export let EightWayDir: DIR[] = [
-    DIR.RIGHT,
-    DIR.UP_RIGHT,
-    DIR.UP,
-    DIR.UP_LEFT,
-    DIR.LEFT,
-    DIR.DOWN_LEFT,
-    DIR.DOWN,
-    DIR.DOWN_RIGHT
-]
-
+export class Trail implements IPositional{
+    x:number;
+    y:number;
+    constructor(x:number, y:number){
+        this.x = x;
+        this.y = y;
+    }
+}
 
 export class Walker implements IPositional{
     x:number;
     y:number;
-    directions: DIR[];
+    directions: DIR[][];
     currentDirection: number = 0;
     
-    constructor(x:number, y:number, directions:DIR[] = FourWayDir){
+    constructor(x:number, y:number, directions:DIR[][] = FourWayDir){
         this.x = x;
         this.y = y;
         this.directions = directions;
@@ -72,10 +123,16 @@ export class Walker implements IPositional{
         direction.apply(this);
     }
 
+    steps(dir_index: number){
+        for(let step of this.directions[dir_index])
+            this.step(Directions[step]);
+        return this.directions[dir_index];
+    }
+
     randomStep(){
-        this.currentDirection = this.directions[
-            randInt(0, this.directions.length)
-        ]
+        this.currentDirection =
+            randInt(0, this.directions.length);
+        
         this.step(
             Directions[
                 this.currentDirection
@@ -87,6 +144,26 @@ export class Walker implements IPositional{
             this.currentDirection += randBool()? 1: -1;
             this.currentDirection = wrap(this.currentDirection, this.directions.length);
         }
-        this.step(Directions[this.directions[this.currentDirection]]);
+        for(let step of this.directions[this.currentDirection])
+            this.step(Directions[step]);
+        return this.directions[this.currentDirection];
+    }
+
+    turn(increment: number){
+        this.currentDirection = wrap(this.currentDirection + increment, this.directions.length);
+    }
+
+    randomSteer(angle_steps: number){
+        return this.steer(randInt(-angle_steps, angle_steps+1));
+    }
+
+    steer(turn: number){
+        this.currentDirection = wrap( this.currentDirection + turn, this.directions.length)
+        return this.steps(this.currentDirection);
+    }
+
+    continue(){
+        return this.steps(this.currentDirection);
     }
 }
+
